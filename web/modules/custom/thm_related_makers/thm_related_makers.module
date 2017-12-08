@@ -1,0 +1,211 @@
+<?php
+
+/**
+ * @file
+ * Contains thm_related_makers.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\search_api\Entity\Index;
+use Drupal\node\NodeInterface;
+use Drupal\file\Entity\File;
+use Drupal\taxonomy\Entity\Term;
+
+/**
+ * Implements hook_help().
+ */
+function thm_related_makers_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the thm_related_makers module.
+    case 'help.page.thm_related_makers':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Module for retrieval and display of people related to a specific HistoryMaker') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function thm_related_makers_theme() {
+  return [
+    'thm_related_makers' => [
+      'variables' => [ 'data' => null ],
+    ],
+  ];
+}
+
+
+/**
+ * Retrieves the node in current display context (page|view|block).
+ * Returns false if node isn't found.
+ *
+ * @return \Drupal\node\Entity\Node|bool
+ */
+function thm_related_makers_get_current_node() {
+  $node = \Drupal::routeMatch()->getParameter('node');
+
+  if ($node instanceof NodeInterface) {
+    return $node;
+  } else {
+    return false;
+  }
+}
+
+function thm_related_makers_get_image_url($fid) {
+  if (!$fid) return false;
+
+  return file_url_transform_relative(
+    file_create_url(File::load($fid)->getFileUri()));
+}
+
+function thm_related_makers_get_terms($tidList) {
+  return array_unique(array_map(function($tid) {
+    return Term::load($tid)->getName();
+  }, $tidList));
+}
+
+function thm_related_makers_get_node_tid($node, $field) {
+  return array_unique(array_map(function($item) {
+    return @$item->getValue()['target_id'];
+  }, iterator_to_array($node->get($field))));
+}
+
+function thm_related_makers_parse_results($results) {
+
+  return array_map(function($item) {
+    /** @var Drupal\search_api\Item\ItemInterface $item */
+    return [
+      'title' => @$item->getField('title')->getValues()[0],
+      'first_name' => stripslashes(
+        @$item->getField('field_first_name')->getValues()[0]),
+      'last_name' => @$item->getField('field_last_name')->getValues()[0],
+      'bio_image' => thm_related_makers_get_image_url(
+        @$item->getField('field_bio_image')->getValues()[0]),
+      'maker_types' => thm_related_makers_get_terms(
+        @$item->getField('field_maker_category')->getValues()),
+      'occupations' => thm_related_makers_get_terms(
+        @$item->getField('field_occupation')->getValues()),
+    ];
+  }, $results);
+}
+
+
+function get_test_data() {
+  return [
+    [
+      'title' => 'John Atchison',
+      'first_name' => 'John',
+      'last_name' => 'Atchison',
+      'bio_image' => '/sites/default/files/Atchison_John_wm.png',
+      'maker_types' => [
+        'StyleMakers'
+      ],
+      'occupations' => [ 'Personal Care Entrepreneur' ]
+    ],
+    [
+      'title' => 'Na\'im Akbar',
+      'first_name' => 'Na\'im',
+      'last_name' => 'Akbar',
+      'bio_image' => '/sites/default/files/Akbar_Naim_wm.png',
+      'maker_types' => [
+        'EducationMakers'
+      ],
+      'occupations' => [
+        'Psychology Professor',
+        'Publisher'
+      ]
+    ],
+    [
+      'title' => 'The Honorable John Allen',
+      'first_name' => 'John',
+      'last_name' => 'Allen',
+      'bio_image' => '/sites/default/files/Allen_John_wm.png',
+      'maker_types' => [
+        'LawMakers'
+      ],
+      'occupations' => [ 'Superior Court Judge' ]
+    ]
+  ];
+}
+
+
+function stringify_terms($node, $field) {
+  return implode('" "', thm_related_makers_get_terms(
+    thm_related_makers_get_node_tid($node, $field)
+  ));
+}
+
+/**
+ * Builds a string of quoted values to be passed to the search engine.
+ *
+ * @param $node Drupal\node\Entity\Node
+ *
+ * @return string $terms
+ */
+function thm_related_makers_build_term_string($node) {
+  return '"' . implode('" "', [
+    implode('" "',
+      array_column($node->get('field_employment')->getValue(), 'value')),
+    implode('" "',
+      array_column($node->get('field_hm_city_state_country')->getValue(), 'value')),
+    stringify_terms($node, 'field_birth_place_term'),
+    stringify_terms($node, 'field_organizations'),
+    stringify_terms($node, 'field_occupation')
+  ]) . '"';
+}
+
+/**
+ * Performs the search.
+ *
+ * @throws Drupal\search_api\SearchApiException
+ *
+ * @param bool $testMode If true, sidesteps the search api and returns canned
+ * data.
+ *
+ * @return array Returns array containing the # of results found and the
+ * results themselves.
+ */
+function thm_related_makers_perform_search($testMode = false) {
+
+  if ($testMode) {
+    return [ 'count' => 3, 'data' => get_test_data() ];
+  }
+
+  $index = Index::load('biography_index');
+
+  /** @var Drupal\search_api\Query\QueryInterface $query */
+  $query  = $index->query(); // TODO: Wrap in try-catch block
+
+  $node   = thm_related_makers_get_current_node();
+  $terms  = null;
+
+  $parseMode = \Drupal::service('plugin.manager.search_api.parse_mode')
+    ->createInstance('terms')
+    ->setConjunction('OR');
+
+  $query->setParseMode($parseMode);
+
+  if (!is_bool($node)) {
+    $terms = thm_related_makers_build_term_string($node);
+    //drupal_set_message("terms: $terms");
+    $query->addCondition('nid', $node->id(), '<>');
+  }
+
+  $query->keys($terms);
+
+  $query->setOption('conjunction', 'OR');
+  $query->range(0, 5);
+
+  $results = $query->execute(); // TODO: Wrap in try-catch block
+
+  return [
+    'count' => $results->getResultCount(),
+    'data' => array_values(thm_related_makers_parse_results(
+      $results->getResultItems()
+    ))
+  ];
+}

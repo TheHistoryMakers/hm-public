@@ -1,0 +1,6 @@
+
+bio_import_xml:
+  fm_path:  '/var/www/hosts/fm_import/'
+  fm_files_path: '/var/www/hosts/fm_import/files'
+  original: 'xml/Weekly_HM_Bios.xml'
+  clean:    'xml/Weekly_HM_Bios_fx.xml'

@@ -1,0 +1,10 @@
+name: Related Makers Block Module
+type: module
+description: Module for retrieval and display of people related to a specific HistoryMaker
+core: 8.x
+package: THM Search Services
+dependencies:
+  - node
+  - block
+  - search_api
+  - search_api_solr

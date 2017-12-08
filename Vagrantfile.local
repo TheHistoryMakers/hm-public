@@ -13,3 +13,7 @@ vconfig['vagrant_synced_folders'].each do |synced_folder|
     config.nfs.map_gid = Process.gid
   end
 end
+
+if Vagrant.has_plugin?('vagrant-exec')
+  config.exec.commands '*', directory: '/var/www/drupalvm/web'
+end
