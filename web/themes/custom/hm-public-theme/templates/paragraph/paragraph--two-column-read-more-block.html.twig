@@ -1,0 +1,43 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Two Column Read More Block.
+ *
+ * Available variables using Paragraphs:
+ * -  field_read_more_block_image
+ * -  field_read_more_block_header
+ * -  field_read_more_block_intro
+ * -  field_read_more_block_content
+ *
+ */
+#}
+
+{# <ol>
+  <li>{{ file_url(content.field_read_more_block_image|field_target_entity.uri.value) }}</li>
+  <li>{{ content.field_read_more_block_image|field_raw('alt') }}</li>
+  <li>{{ content.field_read_more_block_header|field_value }}</li>
+  <li>{{ content.field_read_more_block_intro|field_value }}</li>
+  <li>{{ content.field_read_more_block_content|field_value }}</li>
+</ol> #}
+
+{# {{ _context.paragraph.id() }} #}
+
+<div class="row two-column-snapshot read-more">
+  <div class="col-sm-3 two-column-snapshot--image">
+    <div class="readmore--image-overlay"></div>
+    <img src="{{ file_url(content.field_read_more_block_image|field_target_entity.uri.value) }}" alt="{{ content.field_read_more_block_image|field_raw('alt') }}" />
+  </div>
+  <div class="col-sm-9 snapshot">
+    <h3>{{ content.field_read_more_block_header|field_value }}</h3>
+    <input type="checkbox" class="read-more-state" id="readmore{{ _context.paragraph.id() }}" />
+    <div class="read-more-wrap">
+      <div>
+        {{ content.field_read_more_block_intro|field_value }}
+      </div>
+      <div class="read-more-target">
+        {{ content.field_read_more_block_content|field_value }}
+      </div>      
+    </div>  
+    <label for="readmore{{ _context.paragraph.id() }}" class="button button--primary read-more-trigger"></label>
+  </div>
+</div>

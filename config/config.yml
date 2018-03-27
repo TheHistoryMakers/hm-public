@@ -15,7 +15,7 @@ vagrant_gui: false
 
 # If you need to run multiple instances of Drupal VM, set a unique hostname,
 # machine name, and IP address for each instance.
-vagrant_hostname: hm-public.dev
+vagrant_hostname: hm-public.test
 vagrant_machine_name: hm-public
 vagrant_ip: 192.168.88.88
 
@@ -206,24 +206,24 @@ postgresql_users:
 # Comment out any extra utilities you don't want to install. If you don't want
 # to install *any* extras, set this value to an empty set, e.g. `[]`.
 installed_extras:
-  - adminer
+  # - adminer
   # - blackfire
   # - drupalconsole
-  - drush
+  # - drush
   # - elasticsearch
   # - java
-  - mailhog
+  # - mailhog
   # - memcached
   # - newrelic
   # - nodejs
-  - pimpmylog
+  # - pimpmylog
   # - redis
   # - ruby
   # - selenium
   # - solr
   # - tideways
   # - upload-progress
-  - varnish
+  # - varnish
   # - xdebug
   # - xhprof # use `tideways` if you're installing PHP 7+
 
@@ -314,19 +314,8 @@ varnish_default_backend_port: "80"
 pimpmylog_install_dir: /usr/share/php/pimpmylog
 pimpmylog_grant_all_privs: true
 
-# XDebug configuration. XDebug is disabled by default for better performance.
-php_xdebug_default_enable: 0
-php_xdebug_coverage_enable: 0
-php_xdebug_cli_enable: 1
-php_xdebug_remote_enable: 1
-php_xdebug_remote_connect_back: 1
-# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
-php_xdebug_idekey: PHPSTORM
-php_xdebug_max_nesting_level: 256
-php_xdebug_remote_host: "{{ ansible_default_ipv4.gateway }}"
-
 # Solr Configuration (if enabled above).
-solr_version: "5.5.3"
+solr_version: "6.6.0"
 solr_xms: "64M"
 solr_xmx: "128M"
 

@@ -1,0 +1,100 @@
+.accordion__panel,
+.accordion__panel:hover {
+  @extend %oswald;
+
+  background-color: color(secondary);
+  border-radius: 0;
+  display: flex;
+  font-size: em(20);
+  margin-left: auto;
+  margin-right: auto;
+  padding: em(10, 18) em(15, 18);
+  width: 100%;
+}
+
+.accordion__arrow {
+  height: 1.25rem;
+  margin-left: auto;
+  position: relative;
+  width: 1.25rem;
+}
+
+.accordion__arrow-half {
+  background-color: $white;
+  display: inline-block;
+  height: .1rem;
+  position: absolute;
+  top: .5rem;
+  transition: transform .2s ease;
+  width: .75rem;
+
+  &:first-of-type {
+    left: 0;
+    transform: rotate(-45deg);
+  }
+
+  &:last-of-type {
+    right: 0;
+    transform: rotate(45deg);
+  }
+}
+
+
+.collapsed .accordion__arrow-half {
+  &:first-of-type {
+    transform: rotate(45deg);
+  }
+
+  &:last-of-type {
+    transform: rotate(-45deg);
+  }
+}
+
+.accordion-block.accordion,
+.people-block.accordion {
+  @extend %max-width;
+  width: 70%;
+
+  button.accordion__panel,
+  .accordion__body {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+  }
+
+}
+
+.accordion-block.accordion {
+
+  button.accordion__panel {
+    margin-bottom: 0;
+  }
+
+  .accordion__body p {
+    padding: 0 $default-grid-gutter-width;
+  }
+
+}
+
+//Accordion with image grid
+.image-grid {
+  display: flex;
+  flex-wrap: wrap;
+
+  &--block {
+    background: $white;
+    display: flex;
+    flex: 1 0 33.3%;
+    justify-content: center;
+    margin: em(15);
+    max-width: 30%;
+
+    img {
+      max-height: em(200);
+      max-width: em(200);
+      padding: em(10);
+    }
+
+  }
+
+}

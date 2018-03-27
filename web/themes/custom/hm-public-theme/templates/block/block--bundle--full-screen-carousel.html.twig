@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Full Screen Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  {{ content.field_full_screen_image_slide }}
+ *
+ */
+#}
+
+<div class="contextual-region">
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+<div class="full-screen-carousel carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    {{ content.field_full_screen_image_slide }}
+    {# {% if content.field_full_screen_image_slide %} #}
+    {% if content.field_full_screen_image_slide|length > 17 %}
+      <div class="centered-carousel-indicators carousel-indicators" role="menu">
+        {% for list in content.field_full_screen_image_slide['#items'] %}
+          {% set item_classes = [start_index == loop.index0 ? 'active'] %}
+          <a {{ item.attributes.addClass(item_classes) }} data-target="{{ target }}" data-slide-to="{{ loop.index0 }}" href=".full-screen-carousel"></a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+</div>
+
+<script>
+$(document).ready(function () {
+  $('.full-screen-carousel').find('.field-item').addClass('carousel-item');
+  $('.full-screen-carousel').find('.field-item').first().addClass('active');
+});
+</script>

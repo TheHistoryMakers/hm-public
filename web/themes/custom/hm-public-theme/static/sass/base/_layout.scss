@@ -1,4 +1,5 @@
 html, body {
+  background-color: color(light-grey);
   font-family: $default-font;
   height: 100%;
   line-height: pxtorem($default-line-height);
@@ -23,7 +24,105 @@ h1, h2, h3, h4, h5, h6 {
   margin: 0 0 5px;
 }
 
-.row.layout-1-2col-3-9 {
-  margin-left: 0;
-  margin-right: 0;
+//Correct position of First Sidebar
+.column.sidebar.first {
+  flex-basis: 20%;
+  min-width: 20%;
+  order: 1;
+  padding: 0 0 0 $default-grid-gutter-width;
+}
+
+.content.column,
+.columns-middle .content.column {
+  display: flex;
+  flex: 1 auto;
+  flex-direction: column;
+  order: 2;
+}
+
+//Correct position of Second Sidebar
+.columns-middle .sidebar.second {
+  flex-basis: 20%;
+  min-width: 20%;
+  order: 3;
+  padding: 0;
+}
+
+//Correct spacing on content areas
+div.wrapper {
+  padding: 0;
+}
+
+div.wrapper .content.column,
+div.wrapper .sidebar.first,
+div.wrapper .sidebar.second {
+  margin-bottom: 0;
+}
+
+.block-region-content {
+  width: 100%;
+}
+
+.content-wrapper,
+.section-wrapper {
+  display: flex;
+}
+
+.content-wrapper {
+  @extend %max-width;
+}
+
+//Enables sections to go full-width
+section.content.column.section-wrapper {
+  padding: 0;
+}
+
+//Custom Layouts
+.layout--1-2-1col {
+  @extend %max-width;
+
+  .first {
+    padding-left: $default-grid-gutter-width;
+    padding-right: 0;
+  }
+
+  .last {
+    padding-left: 0;
+    padding-right: $default-grid-gutter-width;
+  }
+
+  .block-region-custom-left {
+    border-right: 1px solid color(medium-grey);
+    padding-right: $default-grid-gutter-width;
+  }
+
+  .block-region-custom-right {
+    padding-left: $default-grid-gutter-width;
+
+    .field-item img {
+      width: 100%;
+    }
+
+  }
+
+  .block-region-custom-left div,
+  .block-region-custom-right div {
+    margin-top: 0;
+    width: 100%;
+  }
+
+}
+
+.layout--1-2col-9-3 {
+
+  .first {
+    padding-left: $default-grid-gutter-width;
+    padding-right: $default-grid-gutter-width;
+  }
+
+  .last {
+    padding-left: $default-grid-gutter-width;
+    padding-right: $default-grid-gutter-width;
+  }
+
 }

@@ -1,0 +1,103 @@
+diff --git a/modules/log/commerce_log.commerce_log_templates.yml b/modules/log/commerce_log.commerce_log_templates.yml
+--- a/modules/log/commerce_log.commerce_log_templates.yml
++++ b/modules/log/commerce_log.commerce_log_templates.yml
+@@ -28,10 +28,98 @@
+   label: 'Order assigned'
+   template: '<p>The order was assigned to {{ user }}.</p>'
+ order_message_customer:
+   category: commerce_order
+   label: 'Customer message'
+   template: '<p><em>Customer message{% if notify %} - Sent to customer{% endif %}</em> - {{ message }}</p>'
+ order_message_admin:
+   category: commerce_order
+   label: 'Admin message'
+   template: '<p><em>Admin message</em> - {{ message }}</p>'
++legacy_order_placed:
++  category: commerce_order
++  label: 'Legacy Order Placed'
++  template: 'Order created through website'
++legacy_order_canceled:
++  category: commerce_order
++  label: 'Legacy Order Canceled'
++  template: 'Customer canceled this order from the checkout form.'
++legacy_order_approved_avs_y:
++  category: commerce_order
++  label: 'Legacy Order Approved: Address & 5-digit Zip Match'
++  template: '<b>Authorization and capture</b><br /><b>ACCEPTED:</b> This transaction has been approved.<br />Amount: {{ order_total }}<br />AVS response: Y - Address (Street) and five digit ZIP match<br />CVV match: M - Match'
++legacy_order_approved_avs_a:
++  category: commerce_order
++  label: 'Legacy Order Approved: Address matches; zip does not'
++  template: '<b>Authorization and capture</b><br /><b>ACCEPTED:</b> This transaction has been approved.<br />Amount: {{ order_total }}<br />AVS response: A - Address (Street) matches, ZIP does not<br />CVV match: M - Match'
++legacy_order_approved_avs_z:
++  category: commerce_order
++  label: 'Legacy Order Approved: 5-digit zip matches; address does not'
++  template: '<b>Authorization and capture</b><br /><b>ACCEPTED:</b> This transaction has been approved.<br />Amount: {{ order_total }}<br />AVS response: Z - Five digit ZIP matches, Address (Street) does not<br />CVV match: M - Match'
++legacy_order_approved_avs_x:
++  category: commerce_order
++  label: 'Legacy Order Approved: Address & 9-digit Zip Match'
++  template: '<b>Authorization and capture</b><br /><b>ACCEPTED:</b> This transaction has been approved.<br />Amount: {{ order_total }}<br />AVS response: X - Address (Street) and nine digit ZIP match<br />CVV match: M - Match'
++legacy_order_approved_avs_p:
++  category: commerce_order
++  label: 'Legacy Order Approved: Test Mode'
++  template: '<b>Authorization and capture</b><br /><b>ACCEPTED:</b> (TESTMODE) This transaction has been approved.<br />Amount: {{ order_total }}<br />AVS response: P - AVS not applicable for this transaction<br />CVV match:  - '
++legacy_order_credit_invalid_cc:
++  category: commerce_order
++  label: 'Legacy Order: Invalid Credit Card (Credit)'
++  template: '<b>Credit</b><br /><b>REJECTED:</b> The credit card number is invalid.<br />Amount: {{ order_total }}<br />AVS response: P - AVS not applicable for this transaction<br />CVV match:  - '
++legacy_order_ac_invalid_cc:
++  category: commerce_order
++  label: 'Legacy Order: Invalid Credit Card (Authorization and Capture)'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> The credit card number is invalid.<br />Amount: {{ order_total }}<br />AVS response: P - AVS not applicable for this transaction<br />CVV match:  - '
++legacy_order_processing_error:
++  category: commerce_order
++  label: 'Legacy Order: Processing Error (U.S.)'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> An error occurred during processing. Call Merchant Service Provider.<br />Amount: {{ order_total }}<br />AVS response: P - AVS not applicable for this transaction<br />CVV match: P - Not Processed'
++legacy_order_processing_error_non_us:
++  category: commerce_order
++  label: 'Legacy Order: Processing Error (Non-U.S.)'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> An error occurred during processing. Call Merchant Service Provider.<br />Amount: {{ order_total }}<br />AVS response: G - Non-U.S. Card Issuing Bank<br />CVV match: M - Match'
++legacy_order_declined_duplicate:
++  category: commerce_order
++  label: 'Legacy Order Declined: Duplicate Order'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> A duplicate transaction has been submitted.<br />Amount: {{ order_total }}<br />AVS response: N - No Match on Address (Street) or ZIP<br />CVV match: M - Match'
++legacy_order_declined_avs_y:
++  category: commerce_order
++  label: 'Legacy Order Declined: Address and 5-digit Zip Match'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> This transaction has been declined.<br />Amount: {{ order_total }}<br />AVS response: Y - Address (Street) and five digit ZIP match<br />CVV match: M - Match'
++legacy_order_declined_avs_s:
++  category: commerce_order
++  label: 'Legacy Order Declined: Service Not Supported'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> This transaction has been declined.<br />Amount: {{ order_total }}<br />AVS response: S - Service not supported by issuer<br />CVV match: N - No Match'
++legacy_order_declined_avs_n:
++  category: commerce_order
++  label: 'Legacy Order Declined: No match on Address or Zip'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> This transaction has been declined.<br />Amount: {{ order_total }}<br />AVS response: N - No Match on Address (Street) or ZIP<br />CVV match: N - No Match'
++legacy_order_declined_avs_g:
++  category: commerce_order
++  label: 'Legacy Order Declined: Non U.S. Card Issuing Bank'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> This transaction has been declined.<br />Amount: {{ order_total }}<br />AVS response: G - Non-U.S. Card Issuing Bank<br />CVV match: M - Match'
++legacy_order_declined_avs_r:
++  category: commerce_order
++  label: 'Legacy Order Declined: Retry'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> This transaction has been declined.<br />Amount: {{ order_total }}<br />AVS response: R - Retry – System unavailable or timed out<br />CVV match: P - Not Processed'
++legacy_order_profile_creation_failure:
++  category: commerce_order
++  label: 'Legacy Order: CIM Profile Creation Failure'
++  template: 'Authorize.Net: Creating CIM profile failed.<br />E00044 - Customer Information Manager is not enabled.'
++legacy_order_declined_mismatch:
++  category: commerce_order
++  label: 'Legacy Order Declined: Mismatch'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> The transaction has been declined because of an AVS mismatch. The address provided does not match billing address of cardholder.<br />Amount: {{ order_total }}<br />AVS response: N - No Match on Address (Street) or ZIP<br />CVV match: M - Match'
++legacy_order_declined_missing_cc:
++  category: commerce_order
++  label: 'Legacy Order Declined: Missing Credit Card'
++  template: '<b>Authorization and capture</b><br /><b>REJECTED:</b> Credit card number is required.<br />Amount: {{ order_total }}<br />AVS response: P - AVS not applicable for this transaction<br />CVV match:  - '
++legacy_order_unknown:
++  category: commerce_order
++  label: 'Unknown State'
++  template: 'fall through'
++legacy_order_customer_comment:
++  category: commerce_order
++  label: 'Customer Comment'
++  template: '<b>Customer submitted comment:</b> <p>{{ message }}</p>'
++

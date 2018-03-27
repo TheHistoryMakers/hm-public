@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Theme override for Accordion Image Grid.
+ *
+ * Available Fields
+ * -  field_accordion_title
+ * -  field_image_grid_block
+ *
+ */
+#}
+
+<div class="accordion-block accordion">
+  <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#{{  _context.elements['#derivative_plugin_id']}}" aria-expanded="false" aria-controls="{{  _context.elements['#derivative_plugin_id']}}">
+    {{ content.field_accordion_title|field_value }}
+    <span class="accordion__arrow">
+      <span class="accordion__arrow-half"></span>
+      <span class="accordion__arrow-half"></span>
+    </span>
+  </button>
+
+  <div class="collapse accordion__body" id="{{  _context.elements['#derivative_plugin_id']}}">
+    <div class="image-grid">
+      {{ content.field_image_grid_block|field_value }}
+    </div>
+  </div>
+</div>

@@ -3,3 +3,102 @@
  * @file
  * hm_public_theme theme implementation file.
  */
+
+function hm_public_theme_preprocess_page(&$variables) {
+  // You will most likely want to show and render the form for anonymous users.
+  $variables['login_form'] = FALSE;
+  if (!\Drupal::currentUser()->id()) {
+    $form = Drupal::formBuilder()->getForm(Drupal\user\Form\UserLoginForm::class) ; 
+    $render = Drupal::service('renderer');
+    $variables['login_form'] = $render->renderPlain($form);
+ /**
+ * Implements hook_theme_suggestions_HOOK_alter() for form templates.
+ * @param array $suggestions
+ * @param array $variables
+ */
+  }
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof \Drupal\node\NodeInterface) {
+    // You can get nid and anything else you need from the node object.
+    $variables["nid"] = $node->id();
+    $variables["node_title"] = $node->getTitle();
+    $variables["body"] = $node->body->value;
+    if ($node->bundle() === "bio") {
+      $variables["field_web_clip1"] = $node->field_web_clip1->value;
+    }
+
+    //following did not work ?!
+    //$vars["field_text"] = $node->get('field_text')->getValue();
+    //$vars["field_text"] = $node->field_text->getValue();
+  }    
+
+}
+
+/**
+ * Implements hook_theme_suggestions for both a Custom Block and a View
+ */
+
+function hm_public_theme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
+  if (isset($variables['elements']['content']['#block_content'])) {
+    array_splice($suggestions, 1, 0, 'block__bundle__' . $variables['elements']['content']['#block_content']->bundle());
+  }
+}
+
+function hm_public_theme_theme_suggestions_views_view_alter(array &$suggestions, array $variables) {
+  if (isset($variables['view']->element['#view_id'])) {
+    $suggestions[] = 'views_view__' . $variables['view']->element['#view_id'];
+  }
+}
+
+/**
+ * Provides variables to the twig responsible for formatting order receipt
+ * emails.
+ *
+ * @param $vars
+ */
+function hm_public_theme_preprocess_commerce_order_receipt(&$vars) {
+  $config                 = \Drupal::config('system.site');
+  $host                   = 'http://' . \Drupal::request()->getHost();
+  $vars['site_name']      = $config->get('name');
+  $vars['site_url']       = $host;
+  $vars['site_login_url'] = $host . '/user/login';
+}
+
+/**
+ * Removes `fortytwo_preprocess_block` from the registry.
+ *
+ * @param $registry
+ */
+function hm_public_theme_theme_registry_alter(&$registry) {
+  $parentBlockRef = 'fortytwo_preprocess_block';
+
+  foreach ($registry as $key => $item) {
+    if (strpos($key, 'block') !== false) {
+      $index = array_search($parentBlockRef, $item['preprocess functions']);
+      if ($index) {
+        unset($registry[$key]['preprocess functions'][$index]);
+      }
+    }
+  }
+}
+
+/**
+ * Serves as a replacement for `fortytwo_preprocess_block`, but a bit more
+ * defensive as the use of Page Manager rewrites blocks in a manner that
+ * triggers warnings.
+ *
+ * @param $variables
+ */
+function hm_public_theme_preprocess_block(&$variables) {
+  // Replace first occurance of block- to clean up the ID's.
+  if (array_key_exists('id', $variables['attributes']) &&
+    substr($variables['attributes']['id'], 0, 6) === 'block-') {
+    $variables['attributes']['id'] = substr($variables['attributes']['id'], 6);
+  }
+
+  $theme = \Drupal::theme()->getActiveTheme()->getName();
+  if (array_key_exists('id', $variables['attributes']) &&
+    strstr($variables['attributes']['id'], $theme)) {
+    $variables['attributes']['id'] = str_replace($theme . '-', '', $variables['attributes']['id']);
+  }
+}

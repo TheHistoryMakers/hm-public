@@ -1,0 +1,51 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Feature Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  field_feature_slide
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image: {{ content.field_feature_slide|field_value }}</li>
+</ol>  #}
+
+<div class="feature-carousel carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+
+    <!-- Left side links -->
+    <ul class="carousel__links">
+      <li class="carousel__link-wrap">
+        <a class="carousel__link carousel__link--bio" href="#">Read Our Biographies</a>
+      </li>
+      <li class="carousel__link-wrap">
+        <a class="carousel__link carousel__link--member" href="#">Become a Member</a>
+      </li>
+      <li class="carousel__link-wrap">
+        <a class="carousel__link carousel__link--da" href="#">Join Our
+          <br /> Digital Archive</a>
+      </li>
+    </ul>
+
+    {{ content.field_feature_slide|field_value }}
+
+    {% if content.field_feature_slide|length > 17 %}
+      <div class="feature-carousel-indicators carousel-indicators" role="menu">
+        {% for list in content.field_feature_slide['#items'] %}
+          {% set item_classes = [start_index == loop.index0 ? 'active'] %}
+          <a {{ item.attributes.addClass(item_classes) }} data-target="{{ target }}" data-slide-to="{{ loop.index0 }}" href=".feature-carousel"></a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+$(document).ready(function () {
+  $('.feature-carousel').find('.feature-carousel-slide').addClass('carousel-item');
+  $('.feature-carousel').find('.feature-carousel-slide').first().addClass('active');
+});
+</script>

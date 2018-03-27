@@ -5,8 +5,19 @@ main:
       static/css/hm_public_theme.css: {}
   js:
       static/js/hm_public_theme.js: {}
-      app/dist/inline.bundle.js: {}
-      app/dist/polyfills.bundle.js: {}
-      app/dist/styles.bundle.js: {}
-      app/dist/vendor.bundle.js: {}
-      app/dist/main.bundle.js: {}
+
+hero-video-player:
+  js:
+    hero-video-player/dist/inline.bundle.js: {preprocess: false}
+    hero-video-player/dist/polyfills.bundle.js: {preprocess: false}
+    hero-video-player/dist/styles.bundle.js: {preprocess: false}
+    hero-video-player/dist/vendor.bundle.js: {preprocess: false}
+    hero-video-player/dist/main.bundle.js: {preprocess: false}
+
+bio-video-player:
+  js:
+    bio-video-player/dist/inline.bundle.js: {preprocess: false}
+    bio-video-player/dist/polyfills.bundle.js: {preprocess: false}
+    bio-video-player/dist/styles.bundle.js: {preprocess: false}
+    bio-video-player/dist/vendor.bundle.js: {preprocess: false}
+    bio-video-player/dist/main.bundle.js: {preprocess: false}

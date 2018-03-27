@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * View override for Boards and Committees
+ * -with Read Bio accordion-
+ *
+ */
+#}
+
+<div class="staff-card--accordion accordion row">
+    <div class="staff-card--image">
+        {{ field_picture }} 
+    </div>
+    <div class="staff-card--content">
+        <h3>{{ field_first_name }} {{ field_last_name }}</h3>
+        <h4>{{ field_position_s }}</h4>
+        <h4>{{ field_location }}</h4>
+
+        <div class="accordion__panel collapsed" data-toggle="collapse" data-target="#{{ uuid }}" aria-expanded="false" aria-controls="{{ uuid }}">
+                <p>Read Bio</p>
+                <span class="accordion__arrow">
+                    <span class="accordion__arrow-half"></span>
+                    <span class="accordion__arrow-half"></span>
+                </span>
+        </div>
+    </div>
+    <div class="collapse accordion__body" id="{{ uuid }}">
+        {{ field_bio }}
+    </div>
+</div>

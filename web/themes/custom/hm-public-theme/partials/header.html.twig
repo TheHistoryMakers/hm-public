@@ -1,19 +1,56 @@
 <header class="header">
     <div class="header__top-row">
-        <a class="header__da-link" href="#">Explore The HistoryMakers Archives</a>
+        <div class="header__da-links">
+            <div class="header__da-links-title">Explore The HistoryMakers Archives</div>
+            <div class="header__da-link-container">
+                <!-- Still need to add role logic to display 'upgrade' link if not a paying member -->
+                {% if logged_in %}
+                    <a class="header__da-link" href="#">The HistoryMakers Digital Archive</a>
+                    <a class="header__da-link" href="#">ScienceMakers Digital Archive</a>
+                {% else %}
+                    <a class="header__da-link" href="/become-a-member">Become a member today!</a>
+                {% endif %}
+            </div>
+        </div>
         <a class="header__donate-link" href="#">Donate Now</a>
 
         <ul class="profile">
         {% if logged_in %}
             <li class="profile__option profile__option--account">
-            <a class="profile__link" href="/user" data-drupal-link-system-path="user">My account</a>
+                <a class="profile__link" href="/user" data-drupal-link-system-path="user">My account</a>
             </li>
             <li class="profile__option profile__option--logout">
-            <a class="profile__link" href="/user/logout" data-drupal-link-system-path="user/logout">Log out</a>
-            </li>  
+                <a class="profile__link" href="/user/logout" data-drupal-link-system-path="user/logout">Log out</a>
+            </li>
         {% else %}
             <li class="profile__option profile__option--logout">
-            <a class="profile__link" href="/user/login" data-drupal-link-system-path="user/login">Sign-up | Login</a>
+            <button class="profile__link" type="button" data-toggle="modal" data-target="#loginModal">
+                Sign-up | Login
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body row">
+                        <div class="col-sm-6 modal__register">
+                            <p class="modal__heading">Become a Member</p>
+                            <a class="button button--secondary" href="/user/register">Sign up</a>
+                        </div>
+                        <div class="col-sm-6 modal__login">
+                            <p class="modal__heading">Already a member? Login here</p>
+                            {{ login_form }}
+                        </div>
+                    </div>
+                    <div class="modal-footer"></div>
+                </div>
+            </div>
+            </div>
             </li>
         {% endif %}
         </ul>
@@ -29,7 +66,7 @@
             </svg>
             </a>
         </li>
-        
+
         <li class="social__item">
             <a href="http://www.twitter.com/thehstrymakers" target="_blank">
             <svg class="social__icon" xmlns="http://www.w3.org/2000/svg" viewBox="212.2 331.4 187.6 129.3">
@@ -107,4 +144,3 @@
 
     {{ page.header }}
     </header>
-  

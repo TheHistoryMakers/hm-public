@@ -1,0 +1,40 @@
+<?php
+
+/**
+ * @file
+ * Contains thm_become_a_member.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function thm_become_a_member_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the thm_become_a_member module.
+    case 'help.page.thm_become_a_member':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('This suite of modules encapsulate the paths to becoming a THM Member') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function thm_become_a_member_theme() {
+  return [
+    'thm_become_a_member' => [
+      'variables' => [
+        'signup_form' => null,
+        'payment_form' => null,
+        'industry_form' => null
+      ],
+      'render element' => 'form',
+    ],
+  ];
+}

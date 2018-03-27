@@ -1,0 +1,21 @@
+<style>
+  /* Allows the content section background 
+  to go full width */
+  .content-wrapper {max-width: 100%;}
+</style>
+
+{% if page.banner %}
+  <div class="banner">
+    {{ page.banner }}
+  </div>
+{% endif %}
+{% if content.banner %}
+  <div class="banner">
+    {{ content.banner }}
+  </div>
+{% endif %}
+
+<div class="wrapper layout--1-2-1col row">
+  <div class="col-sm-12 col-md-6 column first">{{ content.custom_left }}</div>
+  <div class="col-sm-12 col-md-6 column last">{{ content.custom_right }}</div>
+</div>

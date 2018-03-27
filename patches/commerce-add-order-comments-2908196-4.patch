@@ -1,0 +1,318 @@
+diff --git a/modules/log/commerce_log.commerce_log_templates.yml b/modules/log/commerce_log.commerce_log_templates.yml
+index a9aee486..62ad1361 100644
+--- a/modules/log/commerce_log.commerce_log_templates.yml
++++ b/modules/log/commerce_log.commerce_log_templates.yml
+@@ -27,3 +27,11 @@ order_assigned:
+   category: commerce_order
+   label: 'Order assigned'
+   template: '<p>The order was assigned to {{ user }}.</p>'
++order_message_customer:
++  category: commerce_order
++  label: 'Customer message'
++  template: '<p><em>Customer message{% if notify %} - Sent to customer{% endif %}</em> - {{ message }}</p>'
++order_message_admin:
++  category: commerce_order
++  label: 'Admin message'
++  template: '<p><em>Admin message</em> - {{ message }}</p>'
+diff --git a/modules/log/commerce_log.module b/modules/log/commerce_log.module
+index 9c4927c6..c83c94ce 100644
+--- a/modules/log/commerce_log.module
++++ b/modules/log/commerce_log.module
+@@ -19,4 +19,5 @@ function commerce_log_preprocess_commerce_order(&$variables) {
+     '#embed' => TRUE,
+     '#title' => t('Order activity'),
+   ];
++  $variables['order']['activity_message_form'] = \Drupal::formBuilder()->getForm('Drupal\commerce_log\Form\CommerceLogOrderMessageForm');
+ }
+diff --git a/modules/log/src/Event/OrderMessageEvent.php b/modules/log/src/Event/OrderMessageEvent.php
+new file mode 100644
+index 00000000..a213a8f1
+--- /dev/null
++++ b/modules/log/src/Event/OrderMessageEvent.php
+@@ -0,0 +1,96 @@
++<?php
++
++namespace Drupal\commerce_log\Event;
++
++use Drupal\commerce_order\Entity\OrderInterface;
++use Symfony\Component\EventDispatcher\Event;
++
++/**
++ * Defines the order message event.
++ *
++ * @see \Drupal\commerce_order\Event\OrderEvents
++ */
++class OrderMessageEvent extends Event {
++  
++  const TYPE_CUSTOMER = 'customer';
++  const TYPE_ADMIN = 'admin';
++
++  /**
++   * The order.
++   *
++   * @var \Drupal\commerce_order\Entity\OrderInterface
++   */
++  protected $order;
++
++  /**
++   * @var string 
++   *   The type of order message: customer or admin
++   */
++  protected $type;
++
++  /**
++   * @var string
++   *   The message
++   */
++  protected $message;
++
++  /**
++   * @var bool
++   *   Whether or not to notify the customer of this message
++   */
++  protected $notify;
++
++  /**
++   * OrderMessageEvent constructor.
++   *
++   * @param \Drupal\commerce_order\Entity\OrderInterface $order
++   * @param string $type
++   * @param string $message
++   * @param bool $notify
++   */
++  public function __construct(OrderInterface $order, $type, $message, $notify = FALSE) {
++    $this->order = $order;
++    $this->type = $type;
++    $this->message = $message;
++    $this->notify = $notify;
++  }
++  
++  /**
++   * Gets the order.
++   *
++   * @return \Drupal\commerce_order\Entity\OrderInterface
++   *   The order.
++   */
++  public function getOrder() {
++    return $this->order;
++  }
++
++  /**
++   * @return string
++   */
++  public function getType() {
++    return $this->type;
++  }
++
++  /**
++   * @return string
++   */
++  public function getMessage(): string {
++    return $this->message;
++  }
++
++  /**
++   * @return bool
++   */
++  public function getNotify() {
++    return $this->notify;
++  }
++
++  /**
++   * @return string
++   */
++  public function getEventType() {
++    return 'commerce_order.message.' . $this->type;
++  }
++
++}
+diff --git a/modules/log/src/EventSubscriber/OrderEventSubscriber.php b/modules/log/src/EventSubscriber/OrderEventSubscriber.php
+index 7f74a1ee..47d393c9 100644
+--- a/modules/log/src/EventSubscriber/OrderEventSubscriber.php
++++ b/modules/log/src/EventSubscriber/OrderEventSubscriber.php
+@@ -2,6 +2,7 @@
+ 
+ namespace Drupal\commerce_log\EventSubscriber;
+ 
++use Drupal\commerce_log\Event\OrderMessageEvent;
+ use Drupal\commerce_order\Event\OrderAssignEvent;
+ use Drupal\Core\Entity\EntityTypeManagerInterface;
+ use Drupal\state_machine\Event\WorkflowTransitionEvent;
+@@ -36,6 +37,8 @@ class OrderEventSubscriber implements EventSubscriberInterface {
+       'commerce_order.fulfill.pre_transition' => ['onFulfillTransition', -100],
+       'commerce_order.cancel.pre_transition' => ['onCancelTransition', -100],
+       'commerce_order.order.assign' => ['onOrderAssign', -100],
++      'commerce_order.message.customer' => [ 'onCustomerMessage', -100],
++      'commerce_order.message.admin' => ['onAdminMessage', -100],
+     ];
+     return $events;
+   }
+@@ -101,4 +104,31 @@ class OrderEventSubscriber implements EventSubscriberInterface {
+     ])->save();
+   }
+ 
++  /**
++   * Creates a log with a customer message.
++   *
++   * @param \Drupal\commerce_log\Event\OrderMessageEvent $event
++   *   The order message event
++   */
++  public function onCustomerMessage(OrderMessageEvent $event) {
++    $order = $event->getOrder();
++    $this->logStorage->generate($order, 'order_message_customer', [
++      'message' => $event->getMessage(),
++      'notify' => $event->getNotify(),
++    ])->save();
++  }
++
++  /**
++   * Creates a log with an admin message.
++   *
++   * @param \Drupal\commerce_log\Event\OrderMessageEvent $event
++   *   The order message event
++   */
++  public function onAdminMessage(OrderMessageEvent $event) {
++    $order = $event->getOrder();
++    $this->logStorage->generate($order, 'order_message_admin', [
++      'message' => $event->getMessage(),
++    ])->save();
++  }
++
+ }
+diff --git a/modules/log/src/Form/CommerceLogOrderMessageForm.php b/modules/log/src/Form/CommerceLogOrderMessageForm.php
+new file mode 100644
+index 00000000..110aa5bc
+--- /dev/null
++++ b/modules/log/src/Form/CommerceLogOrderMessageForm.php
+@@ -0,0 +1,117 @@
++<?php
++
++namespace Drupal\commerce_log\Form;
++
++use Drupal\commerce_log\Event\OrderMessageEvent;
++use Drupal\Core\Entity\EntityTypeManagerInterface;
++use Drupal\Core\Form\FormBase;
++use Drupal\Core\Form\FormStateInterface;
++use Drupal\Core\Routing\RouteMatchInterface;
++use Symfony\Component\DependencyInjection\ContainerInterface;
++use Symfony\Component\EventDispatcher\EventDispatcherInterface;
++
++class CommerceLogOrderMessageForm extends FormBase {
++  
++  /**
++   * @var \Drupal\Core\Routing\RouteMatchInterface
++   */
++  protected $routeMatch;
++
++  /**
++   * @var \Drupal\commerce_order\OrderStorage
++   */
++  protected $orderStorage;
++
++  /**
++   * @var \Symfony\Component\EventDispatcher\EventDispatcherInterface
++   */
++  protected $eventDispatcher;
++
++  /**
++   * CommerceLogOrderMessageForm constructor.
++   *
++   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entityTypeManager
++   * @param \Drupal\Core\Routing\RouteMatchInterface $routeMatch
++   * @param \Symfony\Component\EventDispatcher\EventDispatcherInterface $eventDispatcher
++   */
++  public function __construct(EntityTypeManagerInterface $entityTypeManager, RouteMatchInterface $routeMatch, EventDispatcherInterface $eventDispatcher) {
++    $this->orderStorage = $entityTypeManager->getStorage('commerce_order');
++    $this->routeMatch = $routeMatch;
++    $this->eventDispatcher = $eventDispatcher;
++  }
++
++
++  /**
++   * @inheritDoc
++   */
++  public static function create(ContainerInterface $container) {
++    return new static(
++      $container->get('entity_type.manager'),
++      $container->get('current_route_match'),
++      $container->get('event_dispatcher')
++    );
++  }
++
++  /**
++   * @inheritDoc
++   */
++  public function getFormId() {
++    return 'commerce_log_comment_form';
++  }
++
++  /**
++   * @inheritDoc
++   */
++  public function buildForm(array $form, FormStateInterface $form_state) {
++    $form['order_id'] = [
++      '#type' => 'value',
++      '#value' => $this->routeMatch->getParameter('commerce_order')->id(),
++    ];
++    $form['message'] = [
++      '#type' => 'textarea',
++      '#title' => $this->t('Message'),
++      '#required' => TRUE,
++    ];
++    $form['type'] = [
++      '#type' => 'radios',
++      '#title' => $this->t('Message Type'),
++      '#options' => [
++        OrderMessageEvent::TYPE_ADMIN => $this->t('Admin message'),
++        OrderMessageEvent::TYPE_CUSTOMER => $this->t('Customer message')
++      ],
++      '#default_value' => OrderMessageEvent::TYPE_ADMIN,
++    ];
++    $form['notify'] = [
++      '#type' => 'checkbox',
++      '#title' => $this->t('Notify customer by email'),
++      '#states' => [
++        'visible' => [
++          ':input[name="type"]' => ['value' => OrderMessageEvent::TYPE_CUSTOMER],
++        ],
++      ],
++    ];
++    $form['actions'] = [
++      '#type' => 'container',
++    ];
++    $form['actions']['submit'] = [
++      '#type' => 'submit',
++      '#value' => $this->t('Create order message'),
++      '#button_type' => 'primary',
++    ];
++    return $form;
++  }
++
++  /**
++   * @inheritDoc
++   */
++  public function submitForm(array &$form, FormStateInterface $form_state) {
++    $order = $this->orderStorage->load($form_state->getValue('order_id'));
++    if (!empty($order)) {
++      $notify = ($form_state->getValue('type') === OrderMessageEvent::TYPE_CUSTOMER && $form_state->getValue('notify'));
++      $event = new OrderMessageEvent($order, $form_state->getValue('type'), $form_state->getValue('message'), $notify);
++      $this->eventDispatcher->dispatch($event->getEventType(), $event);
++    }
++  }
++
++
++}
+diff --git a/modules/order/templates/commerce-order--admin.html.twig b/modules/order/templates/commerce-order--admin.html.twig
+index f1b1c4a6..8c005366 100644
+--- a/modules/order/templates/commerce-order--admin.html.twig
++++ b/modules/order/templates/commerce-order--admin.html.twig
+@@ -30,6 +30,9 @@
+       <h2>{% trans %}Order activity{% endtrans %}</h2>
+       {{ order.activity }}
+     {% endif %}
++    {% if order.activity_message_form %}
++      {{ order.activity_message_form }}
++    {% endif %}
+   </div>
+   <div class="layout-region layout-region-order-secondary">
+     <div class="entity-meta">

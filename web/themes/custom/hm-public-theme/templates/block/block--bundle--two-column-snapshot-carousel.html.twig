@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Two Column Snapshot Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  {{ content.field_two_column_snapshot }}
+ *
+ */
+#}
+<div class="contextual-region">
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div class="two-column-snapshot-carousel carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      {{ content.field_two_column_snapshot }}
+    </div>
+      {# {% if content.field_two_column_slide %} #}
+      {% if content.field_two_column_snapshot|length > 17 %}
+        <div class="centered-carousel-indicators carousel-indicators" role="menu">
+          {% for list in content.field_two_column_snapshot['#items'] %}
+            {% set item_classes = [start_index == loop.index0 ? 'active'] %}
+            <a {{ item.attributes.addClass(item_classes) }} data-target="{{ target }}" data-slide-to="{{ loop.index0 }}" href=".two-column-snapshot-carousel"></a>
+          {% endfor %}
+        </div>
+      {% endif %}
+  </div>
+
+</div>
+
+<script>
+$(document).ready(function () {
+  $('.two-column-snapshot-carousel').find('.field-item').addClass('carousel-item');
+  $('.two-column-snapshot-carousel').find('.field-item').first().addClass('active');
+});
+</script>

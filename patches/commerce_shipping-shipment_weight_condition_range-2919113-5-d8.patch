@@ -1,0 +1,178 @@
+diff --git a/modules/contrib/commerce_shipping/src/Plugin/Commerce/Condition/ShipmentWeight.php b/modules/contrib/commerce_shipping/src/Plugin/Commerce/Condition/ShipmentWeight.php
+index e1ae1e01f..639591ffb 100644
+--- a/modules/contrib/commerce_shipping/src/Plugin/Commerce/Condition/ShipmentWeight.php
++++ b/modules/contrib/commerce_shipping/src/Plugin/Commerce/Condition/ShipmentWeight.php
+@@ -26,8 +26,14 @@ class ShipmentWeight extends ConditionBase {
+    */
+   public function defaultConfiguration() {
+     return [
+-      'operator' => '>',
+-      'weight' => NULL,
++      'min' => [
++        'min_operator' => '>',
++        'min_weight' => NULL,
++      ],
++      'max' => [
++        'max_operator' => '<',
++        'max_weight' => NULL,
++      ],
+     ] + parent::defaultConfiguration();
+   }
+ 
+@@ -37,21 +43,51 @@ public function defaultConfiguration() {
+   public function buildConfigurationForm(array $form, FormStateInterface $form_state) {
+     $form = parent::buildConfigurationForm($form, $form_state);
+ 
+-    $weight = $this->configuration['weight'];
+-
+-    $form['operator'] = [
+-      '#type' => 'select',
+-      '#title' => $this->t('Operator'),
+-      '#options' => $this->getComparisonOperators(),
+-      '#default_value' => $this->configuration['operator'],
+-      '#required' => TRUE,
++    $min_weight = $this->configuration['min']['min_weight'];
++    $max_weight = $this->configuration['max']['max_weight'];
++
++    $form['min'] = [
++      '#type' => 'fieldset',
++      '#title' => $this->t('Minimum'),
++      'min_operator' => [
++        '#type' => 'select',
++        '#title' => $this->t('Operator'),
++        '#options' => [
++          '>' => $this->t('Greater than'),
++          '>=' => $this->t('Greater than or equal to'),
++        ],
++        '#default_value' => $this->configuration['min']['min_operator'],
++        '#required' => TRUE,
++      ],
++      'min_weight' => [
++        '#type' => 'physical_measurement',
++        '#measurement_type' => MeasurementType::WEIGHT,
++        '#title' => $this->t('Weight'),
++        '#default_value' => $min_weight,
++        '#required' => TRUE,
++      ],
+     ];
+-    $form['weight'] = [
+-      '#type' => 'physical_measurement',
+-      '#measurement_type' => MeasurementType::WEIGHT,
+-      '#title' => $this->t('Weight'),
+-      '#default_value' => $weight,
+-      '#required' => TRUE,
++
++    $form['max'] = [
++      '#type' => 'fieldset',
++      '#title' => 'Maximum',
++      'max_operator' => [
++        '#type' => 'select',
++        '#title' => $this->t('Operator'),
++        '#options' => [
++          '<=' => $this->t('Less than or equal to'),
++          '<' => $this->t('Less than'),
++        ],
++        '#default_value' => $this->configuration['max']['max_operator'],
++        '#required' => TRUE,
++      ],
++      'max_weight' => [
++        '#type' => 'physical_measurement',
++        '#measurement_type' => MeasurementType::WEIGHT,
++        '#title' => $this->t('Weight'),
++        '#default_value' => $max_weight,
++        '#required' => TRUE,
++      ],
+     ];
+ 
+     return $form;
+@@ -64,8 +100,12 @@ public function submitConfigurationForm(array &$form, FormStateInterface $form_s
+     parent::submitConfigurationForm($form, $form_state);
+ 
+     $values = $form_state->getValue($form['#parents']);
+-    $this->configuration['operator'] = $values['operator'];
+-    $this->configuration['weight'] = $values['weight'];
++
++    $this->configuration['min']['min_operator'] = $values['min']['min_operator'];
++    $this->configuration['min']['min_weight'] = $values['min']['min_weight'];
++
++    $this->configuration['max']['max_operator'] = $values['max']['max_operator'];
++    $this->configuration['max']['max_weight'] = $values['max']['max_weight'];
+   }
+ 
+   /**
+@@ -80,30 +120,59 @@ public function evaluate(EntityInterface $entity) {
+       // The conditions can't be applied until the weight is known.
+       return FALSE;
+     }
+-    $condition_unit = $this->configuration['weight']['unit'];
++
++    $weight_conditions = [];
++
++    $min_condition_unit = $this->configuration['min']['min_weight']['unit'];
+     /** @var \Drupal\physical\Weight $weight */
+-    $weight = $weight->convert($condition_unit);
+-    $condition_weight = new Weight($this->configuration['weight']['number'], $condition_unit);
++    $weight_conditions['min']['shipment_weight'] = $weight->convert($min_condition_unit);
++    $weight_conditions['min']['configuration_weight'] = new Weight($this->configuration['min']['min_weight']['number'], $min_condition_unit);
++    $weight_conditions['min']['operator'] = $this->configuration['min']['min_operator'];
+ 
+-    switch ($this->configuration['operator']) {
+-      case '>=':
+-        return $weight->greaterThanOrEqual($condition_weight);
++    $max_condition_unit = $this->configuration['max']['max_weight']['unit'];
++    /** @var \Drupal\physical\Weight $weight */
++    $weight_conditions['max']['shipment_weight'] = $weight->convert($max_condition_unit);
++    $weight_conditions['max']['configuration_weight'] = new Weight($this->configuration['max']['max_weight']['number'], $max_condition_unit);
++    $weight_conditions['max']['operator'] = $this->configuration['max']['max_operator'];
+ 
+-      case '>':
+-        return $weight->greaterThan($condition_weight);
++    $pass = false;
++    foreach ($weight_conditions as $condition => $config) {
++      $shipment_weight = $config['shipment_weight'];
++      $condition_weight = $config['configuration_weight'];
+ 
+-      case '<=':
+-        return $weight->lessThanOrEqual($condition_weight);
+ 
+-      case '<':
+-        return $weight->lessThan($condition_weight);
++      switch ($config['operator']) {
++        case '>=':
++          $pass = $shipment_weight->greaterThanOrEqual($condition_weight);
++          break;
+ 
+-      case '==':
+-        return $weight->equals($condition_weight);
++        case '>':
++          $pass = $shipment_weight->greaterThan($condition_weight);
++          break;
+ 
+-      default:
+-        throw new \InvalidArgumentException("Invalid operator {$this->configuration['operator']}");
++        case '<=':
++          $pass = $shipment_weight->lessThanOrEqual($condition_weight);
++          break;
++
++        case '<':
++          $pass = $shipment_weight->lessThan($condition_weight);
++          break;
++
++        case '==':
++          $pass = $shipment_weight->equals($condition_weight);
++          break;
++
++        default:
++          throw new \InvalidArgumentException("Invalid operator {$this->configuration['operator']}");
++      }
++
++      if (!$pass) {
++        return false;
++      }
+     }
++
++    return true;
++
+   }
+ 
+ }

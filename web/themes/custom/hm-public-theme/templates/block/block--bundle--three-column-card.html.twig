@@ -1,0 +1,22 @@
+{% set cardTotal = content['#block_content'].field_three_column_card.value %}
+
+<div class="container my-4 px-0">
+    <div class="contextual-region row">
+      {{ title_prefix }}
+      {{ title_suffix }}
+
+      {% for c in cardTotal %}
+        {% set card = content.field_three_column_card[loop.index0]['#paragraph'] %}
+        <div class="col-sm-4 my-4">
+          <div class="">
+            <img class="w-100 my-2" src="{{ file_url(card.field_card_image.entity.uri.value ) }}" alt="">
+          </div>
+          <h4>{{ card.field_card_title.value }}</h4>
+          <date>{{ card.field_card_date_info.value | date("l, F d, Y") }}</date>
+          <p>{{ card.field_card_body.value }}</p>
+          <a class="button button--primary w-100 text-center py-3" href="{{ card.field_card_link.0.url }}">{{ card.field_card_link_text.value }}</a>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>

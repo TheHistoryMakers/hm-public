@@ -18,24 +18,54 @@
 @import 'lib/icomoon';
 
 // Put your own mixins in this file
-@import 'lib/mixins';
 @import 'lib/functions';
+@import 'lib/mixins';
 
 // Import assets
 @import 'assets/pageelements';
 
 // Basic layout styling
-@import 'base/layout';
-@import 'base/header';
+@import 'base/buttons';
 @import 'base/footer';
+@import 'base/header';
+@import 'base/layout';
 @import 'base/navigation';
 @import 'base/sidebars';
 @import 'base/tabs';
-@import 'base/buttons';
+
+// Shared components
+@import 'shared/cards';
+@import 'shared/forms/progress-bar';
+@import 'shared/forms/controls';
+@import 'shared/accordion';
+@import 'shared/cards';
+@import 'shared/carousel';
+@import 'shared/forms/progress-bar';
+@import 'shared/snapshot-blocks';
+@import 'shared/quotes';
+@import 'shared/slides';
+@import 'shared/readmore';
+@import 'shared/timeline';
+@import 'shared/view-blocks';
+@import 'shared/testimonials';
+@import 'shared/img-button';
+@import 'shared/collage';
+
+// Content styling
+@import 'content/intro-content';
+@import 'content/page-banner';
+@import 'content/page-title';
+@import 'content/feature-carousel';
+@import 'content/content';
+@import 'content/how-it-works';
 
 // Specific page styling
 @import 'pages/home';
 @import 'pages/bio-details';
+@import 'pages/user-profile';
+@import 'pages/become-a-member';
+@import 'pages/events';
 
 // Views styling
 @import 'views/biographies';
+@import 'views/people';

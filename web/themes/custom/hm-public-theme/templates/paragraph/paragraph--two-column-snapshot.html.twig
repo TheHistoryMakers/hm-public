@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Snapshot Blocks.
+ *
+ * Available variables using Paragraphs:
+ * -  field_two_col_snapshot_image
+ * -  field_two_col_snapshot_header
+ * -  field_two_col_snapshot_content
+ * -  field_two_col_snapshot_button
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image:         {{ content.field_two_col_snapshot_image|field_value }}</li>
+  <li>Image URL:     {{ file_url(content.field_two_col_snapshot_image|field_target_entity.uri.value) }}</li>  
+  <li>Alt Tag:       {{ content.field_two_col_snapshot_image|field_raw('alt') }}</li>
+  <li>Snapshot Header:  {{ content.field_two_col_snapshot_header }}</li>
+  <li>Snapshot Content: {{ content.field_two_col_snapshot_content }}</li>
+  <li>Snapshot Button URL:  {{ content.field_two_col_snapshot_button|field_raw('uri') }}</li>
+  <li>Snapshot Button Title:  {{ content.field_two_col_snapshot_button|field_raw('title') }}</li>
+</ol> #}
+
+<div class="row two-column-snapshot">
+  <div class="col-sm-5 two-column-snapshot--image">
+    <img src="{{ file_url(content.field_two_col_snapshot_image|field_target_entity.uri.value) }}" alt="{{ content.field_two_col_snapshot_image|field_raw('alt') }}" />
+  </div>
+  <div class="col-sm-7 snapshot">
+    <h3>{{ content.field_two_col_snapshot_header|field_value }}</h3>
+    <p>{{ content.field_two_col_snapshot_content|field_value }}</p>
+    {% if content.field_two_col_snapshot_button|field_value is not empty %}
+      <a href="{{ content.field_two_col_snapshot_button|field_raw('uri') }}" class="button button--primary">
+        {{ content.field_two_col_snapshot_button|field_raw('title') }}
+      </a>
+    {% endif %} 
+  </div>
+</div>

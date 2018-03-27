@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Theme override for paragraph Standard Feature Content.
+ *
+ * Available variables using Paragraphs:
+ * -  field_feature_header
+ * -  field_feature_content
+ *
+ */
+#}
+
+{# <ol>
+  <li>Portrait: {{ content.field_feature_header|field_value }}</li>
+  <li>Title: {{ content.	field_feature_content|field_value }}</li>
+</ol> #}
+
+<div class="carousel__inner-caption">
+
+  <div class="carousel-caption">
+    <h2>{{ content.field_feature_header|field_value }}</h2>
+    {{ content.field_feature_content|field_value }}
+  </div>
+</div>

@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * View override for Advisory Board
+ * -without Read Bio accordion-
+ *
+ */
+#}
+
+<div class="staff-card--accordion accordion row">
+    <div class="staff-card--image">
+        {{ field_picture }} 
+    </div>
+    <div class="staff-card--content">
+        <h3>{{ field_first_name }} {{ field_last_name }}</h3>
+        <h4>{{ field_position_s }}</h4>
+        <h4>{{ field_location }}</h4>
+    </div>
+</div>

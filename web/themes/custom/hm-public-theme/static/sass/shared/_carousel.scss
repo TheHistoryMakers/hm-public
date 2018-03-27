@@ -1,0 +1,64 @@
+.full-screen-carousel {
+  margin-bottom: em(60);
+}
+
+.hero-carousel {
+  margin-bottom: em(30);
+  margin-top: em(30);
+}
+
+.two-column-quote-carousel {
+  background-color: color(carousel-bg-alt);
+}
+
+.two-column-quote-carousel .carousel-inner,
+.two-column-snapshot-carousel .carousel-inner,
+.hero-carousel .carousel-inner {
+  @extend %max-width;
+  padding: 0 $default-grid-gutter-width;
+}
+
+//Testimonial Carousel
+.testimonial-carousel.carousel.slide {
+  background-color: color(carousel-bg-alt);
+  padding-bottom: em(30);
+}
+
+// Pagers
+.centered-carousel-indicators.carousel-indicators {
+  left: 0;
+
+  a {
+    background-color: color(disabled-text);
+    border-radius: 100%;
+    height: em(8);
+    margin-right: em(10);
+    width: em(8);
+  }
+
+  a.active {
+    background-color: $white;
+  }
+
+}
+
+.hero-carousel .centered-carousel-indicators.carousel-indicators {
+  bottom: em(30);
+}
+
+.right-carousel-indicators.carousel-indicators {
+  bottom: em(30);
+
+  a {
+    background-color: color(medium-grey);
+    border-radius: em(100);
+    height: em(15);
+    margin-right: em(15);
+    width: em(15);
+  }
+
+  a.active {
+    background-color: color(dark-grey);
+  }
+
+}

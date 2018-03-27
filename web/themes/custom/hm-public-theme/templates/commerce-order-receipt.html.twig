@@ -1,0 +1,219 @@
+{#
+/**
+ * @file
+ * Template for the order receipt.
+ *
+ * Available variables:
+ * - site_name:  The name of the site.
+ * - site_url: URL of the site.
+ * - site_login_url:  URL used for logging in.
+ * - order_entity: The order entity.
+ * - billing_information: The rendered billing information.
+ * - shipping_information: The rendered shipping information.
+ * - payment_method: The rendered payment method.
+ * - totals: An array of order totals values with the following keys:
+ *   - subtotal: The order subtotal price.
+ *   - adjustments: An array of adjustment totals:
+ *     - type: The adjustment type.
+ *     - label: The adjustment label.
+ *     - total: The adjustment total price.
+ *     - weight: The adjustment weight, taken from the adjustment type.
+ *   - total: The order total price.
+ *
+ * @ingroup themeable
+ */
+#}
+<table style="margin: 15px auto 0 auto; max-width: 768px; font-family: arial,sans-serif; border: 1px solid #cccccc;">
+  <tbody>
+  <tr>
+    <td>
+      <table style="margin-left: auto; margin-right: auto; max-width: 768px;">
+        <tbody>
+        <tr>
+          <td>
+            <h2>
+              <a href="{{ url('<front>') }}" style="color: #0e69be; text-decoration: none; font-weight: bold; margin-top: 15px;">
+                  {{ site_name }}
+              </a>
+            </h2>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <table style="min-width: 450px; margin: 5px auto 0 auto; padding: 40px 30px 30px 10px;">
+        <tbody>
+        <tr>
+          <td style="padding-bottom: 20px">
+            Welcome to The HistoryMakers community, {{ billing_information.commerce_customer_first_name }}! We are so
+            glad to have you as our DigitalMaker. We are so pleased to have you join our network of users. As a
+            DigitalMaker you will receive the following benefits at no charge on {{ url('<front>') }}:
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 15px; padding-left: 10px">
+            <ul style="margin: 0; padding: 0;">
+              <li>Unlimited access to our more than 310 digitized, streaming video interviews</li>
+              <li>Unlimited access to nearly 1000 Hours of VIDEO</li>
+              <li>Access to our more than 2,000 HistoryMaker biographies</li>
+              <li>Special invitations to our Public Programs</li>
+              <li>A personal My HistoryChest for easy storage and retrieval of your significant content</li>
+              <li>Inclusion in The HistoryMakers mailing list</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px">
+            To complete the registration process, you must visit the verification URL below:
+            <a href="#">link to {{ site_name }} Digital Archives</a>
+            Once you have completed this step your account will be activated and ready to use. In the meantime, if you
+            have any questions or comments, simply reply to this e-mail and someone from {{ site_name }} will get in
+            touch with you.
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px">
+            Sincerely,
+            {{ site_name }}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px">
+            Want to manage your order online?
+            If you need to check the status of your order, please visit our home page at {{ site_name }} and click on
+            "My account" in the menu or login with the following link:
+          </td>
+        </tr>
+        <tr>
+          <td><a href="{{ site_login_url }}">{{ site_login_url }}</a></td>
+        </tr>
+        <tr>
+          <td style="font-weight: bold; padding: 6px 0 6px 6px; background-color: #006699; color: white;">
+            {{ 'Order #@number details:'|t({'@number': order_entity.getOrderNumber}) }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {% block order_items %}
+            <table style="padding-top: 15px; padding-bottom:15px; width: 100%">
+              <tbody style="text-align: left;">
+              {% for order_item in order_entity.getItems %}
+              <tr>
+                <td>
+                  {{ order_item.getQuantity|number_format }} x
+                </td>
+                <td>
+                  <span>{{ order_item.label }}</span>
+                  <span style="float: right;">{{ order_item.getTotalPrice|commerce_price_format }}</span>
+                </td>
+              </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            {% endblock %}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            {% if (billing_information or shipping_information) %}
+            <table style="width: 100%; padding-top: 15px; padding-bottom: 15px; text-align: left;">
+              <tbody>
+              <tr>
+                {% if shipping_information %}
+                  <td style="padding: 6px 0 6px 6px; font-weight: bold;  background-color: #006699; color: white;">
+                      {{ 'Shipping Information'|t }}
+                  </td>
+                {% endif %}
+                {% if billing_information %}
+                  <td style="padding: 6px 0 6px 6px; font-weight: bold; background-color: #006699; color: white;">
+                      {{ 'Billing Information'|t }}
+                  </td>
+                {% endif %}
+              </tr>
+              <tr>
+                {% if shipping_information %}
+                  <td>
+                    {% block shipping_information %}
+                      {{ shipping_information }}
+                    {% endblock %}
+                  </td>
+                {% endif %}
+                {% if billing_information %}
+                  <td>
+                    {% block billing_information %}
+                      {{ billing_information }}
+                    {% endblock %}
+                  </td>
+                {% endif %}
+              </tr>
+              {% if payment_method %}
+                <tr>
+                  <td style="font-weight: bold; padding: 6px 0 6px 6px; margin-top: 10px; background-color: #006699; color: white;">
+                      {{ 'Payment Method'|t }}
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    {% block payment_method %}
+                      {{ payment_method }}
+                    {% endblock %}
+                  </td>
+                </tr>
+              {% endif %}
+              </tbody>
+            </table>
+            {% endif %}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p style="margin-bottom: 0;">
+              {{ 'Subtotal: @subtotal'|t({'@subtotal': totals.subtotal|commerce_price_format}) }}
+            </p>
+          </td>
+        </tr>
+        {% for adjustment in totals.adjustments %}
+        <tr>
+          <td>
+            <p style="margin-bottom: 0;">
+              {{ adjustment.label }}: {{ adjustment.total|commerce_price_format }}
+            </p>
+          </td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>
+            <p style="font-size: 24px; padding-top: 15px; padding-bottom: 5px;">
+              {{ 'Order Total: @total'|t({'@total': order_entity.getTotalPrice|commerce_price_format}) }}
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px;">
+            {% block additional_information %}
+              {{ 'Thank you for your order!'|t }}
+            {% endblock %}
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px;">
+            Where can I get help with reviewing my order?
+          To learn more about managing your orders on The HistoryMakers, please visit our help page.
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px;">
+            Please note: This e-mail message is an automated notification. Please do not reply to this message.
+          </td>
+        </tr>
+        <tr>
+          <td style="padding-bottom: 20px;">Thanks again for shopping with us.</td>
+        </tr>
+        <tr>
+          <td>{{ site_name }}</td>
+        </tr>
+        </tbody>
+      </table>
+    </td>
+  </tr>
+  </tbody>
+</table>

@@ -1,0 +1,78 @@
+//Testimonial Slide
+.testimonial-carousel {
+
+  h2 {
+    @extend %h2;
+    background-color: color(carousel-bg-alt);
+    padding-top: em(15);
+    text-align: center;
+  }
+
+  .quote-block--content {
+    padding-top: em(30);
+
+    q {
+      font-size: em(30);
+    }
+
+  }
+
+}
+
+// Two Column Testimonial
+.two-column-testimonial {
+
+  .two-column-quote--content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .two-column-quote--content a {
+    @extend %oswald;
+    font-size: em(24);
+    line-height: 120%;
+    margin-right: 0;
+    padding: em(10);
+  }
+
+  .two-column-quote--content q {
+    @extend %source-sans;
+    font-size: em(20);
+  }
+
+  .two-column-testimonial--byline {
+    @extend %source-sans-semi-bold;
+    margin-bottom: 0;
+  }
+
+  .two-column-testimonial--credit {
+    margin-bottom: $default-grid-gutter-width;
+    margin-top: 0;
+  }
+
+}
+
+.two-column-testimonial.align-content-left {
+  display: flex;
+
+  .two-column-quote--image {
+    order: 2;
+
+    img {
+      margin-left: em(10);
+    }
+
+  }
+
+  .two-column-quote--content {
+    order: 1;
+  }
+
+}
+
+.two-column-testimonial--header {
+  @extend %h2;
+  text-align: center;
+}

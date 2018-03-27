@@ -1,0 +1,59 @@
+.read-more .two-column-snapshot--image {
+  padding: 0;
+}
+
+.read-more-state {
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+}
+
+.read-more-target {
+  font-size: 0;
+  max-height: 0;
+  opacity: 0;
+  transition: .25s ease;
+}
+
+.read-more-state:checked ~ .read-more-wrap .read-more-target {
+  font-size: inherit;
+  max-height: 999em;
+  opacity: 1;
+}
+
+.read-more-state ~ .read-more-trigger:before {
+  content: 'Read More';
+}
+
+.read-more-state:checked ~ .read-more-trigger:before {
+  content: 'Read Less';
+}
+
+.read-more-trigger {
+  @extend %source-sans-semi-bold;
+  color: $white;
+  cursor: pointer;
+}
+
+//Read More button
+label.button.button--primary.read-more-trigger {
+  padding: em(10);
+  width: em(150);
+}
+
+//Image Overlay
+.readmore {
+  height: em(231);
+  position: absolute;
+  right: em(10);
+  width: em(231);
+}
+
+.readmore--image-overlay {
+  background: color(quaternary-overlay);
+  height: em(231);
+  position: absolute;
+  right: em(10);
+  width: em(231);
+  z-index: 1;
+}

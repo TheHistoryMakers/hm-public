@@ -16,7 +16,7 @@ var cp           = require('child_process');
  */
 gulp.task('browser-sync', function() {
   browserSync.init({
-      proxy: "hm-public.dev"
+      proxy: "hm-public.test"
   });
 });
 
@@ -87,8 +87,8 @@ gulp.task('reload', function () {
  * Watch files and do stuff.
  */
 gulp.task('watch', ['clean', 'sass-compile','browser-sync'], function () {
-  gulp.watch('static/sass/**/*.+(scss|sass)', ['sass-compile']);
-  gulp.watch(['templates/**/*.twig', '**/*.yml'], ['reload']);
+  gulp.watch('static/sass/**/*.+(scss|sass)', ['sass-compile','reload']);
+  gulp.watch(['templates/**/*.twig', 'partials/**/*.twig','**/*.yml'], ['clearcache','reload']);
 });
 
 /**

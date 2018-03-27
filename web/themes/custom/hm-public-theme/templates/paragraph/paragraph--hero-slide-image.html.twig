@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Image Slide.
+ *
+ * Available variables using Paragraphs:
+ * -  field_hero_image
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image:         {{ content.field_hero_image|field_value }}</li>
+  <li>Image URL:     {{ file_url(content.field_hero_image|field_target_entity.uri.value) }}</li>  
+  <li>Alt Tag:       {{ content.field_hero_image|field_raw('alt') }}</li>
+</ol> #}
+
+<div class="hero-slide">
+  <div class="hero-slide--image" style="background-image: url('{{ file_url(content.field_hero_image|field_target_entity.uri.value) }}');" alt="{{ content.field_hero_image|field_raw('alt') }}">
+  </div>
+</div>

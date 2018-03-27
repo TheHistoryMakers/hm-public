@@ -1,0 +1,41 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Snapshot Blocks.
+ *
+ * Available variables using Paragraphs:
+ * -  field_snapshot_header
+ * -  field_snapshot_content
+ *
+ * Snapshot CTA:
+ * -  field_snapshot_button
+ * -  field_snapshot_download
+ * -  field_snapshot_link 
+ *
+ */
+#}
+
+{# <ol>
+  <li>Snapshot Header:  {{ content.field_snapshot_header }}</li>
+  <li>Snapshot Content: {{ content.field_snapshot_content }}</li>
+</ol> #}
+
+<div class="snapshot">
+
+  {% if content.field_snapshot_image|field_value is not empty %}
+    <div class="snapshot--image" style="background-image: url('{{ file_url(content.field_snapshot_image|field_target_entity.uri.value) }}');" alt="{{ content.field_snapshot_image|field_raw('alt') }}"></div>
+  {% endif %}
+
+  <h3 style="color: {{ content.field_snapshot_header_color|field_value }}">{{ content.field_snapshot_header|field_value }}</h3>
+  {% if content.field_snapshot_subtitle|field_value is not empty %}
+    <h4>{{ content.field_snapshot_subtitle|field_value }}</h4>
+  {% endif %}
+  <p>{{ content.field_snapshot_content|field_value }}</p>
+
+  {% if content.field_snapshot_cta|field_value is not empty %}
+    <ul>
+      {{ content.field_snapshot_cta|field_value }}
+    </ul>  
+  {% endif %} 
+  
+</div>

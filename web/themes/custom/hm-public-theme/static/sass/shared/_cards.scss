@@ -1,0 +1,193 @@
+// Generic Card Override
+.card {
+  border-radius: 0;
+}
+
+// Bio Cards
+.bio-card {
+  border: 1px solid color(medium-grey);
+  display: flex;
+  margin-bottom: em(15);
+  overflow: hidden;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+}
+
+.bio-card__img {
+  height: 100%;
+  max-width: 120px;
+  transform: scale(1.1);
+  width: 50%;
+}
+
+.bio-card__info {
+  background-color: $white;
+  flex: 2;
+  padding: em(12);
+  z-index: 2;
+}
+
+.bio-card__name {
+  @extend %card-header;
+}
+
+// Board/Committee Cards
+.staff-card {
+  margin: 0 2% em(32) 2.5%;
+  max-width: 45%;
+  padding: 0;
+
+  &--accordion {
+    background: $white;
+    border: 1px solid color(medium-grey);
+    display: flex;
+
+    .accordion__panel {
+      background-color: transparent;
+      color: color(secondary);
+      cursor: pointer;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+
+    .accordion__panel .accordion__arrow-half {
+      background-color: color(secondary);
+    }
+
+    .accordion__body {
+      color: $black;
+      margin-left: 0;
+      margin-right: 0;
+      max-width: 100%;
+
+      p {
+        padding: em(15) em(30) em(30);
+      }
+
+    }
+
+  }
+
+  &--image {
+    flex: 1 0 100%;
+    height: auto;
+    max-width: 200px;
+    padding: 0;
+    width: 100%;
+
+    img {
+      height: auto;
+      width: 100%;
+    }
+
+  }
+
+  &--content {
+    background-color: $white;
+    flex: 2;
+    padding: em(12);
+
+    h3 {
+      @extend %card-header;
+      font-size: em(25);
+      line-height: 120%;
+      margin-top: 0;
+    }
+
+    h4 {
+      color: $black;
+      font-size: em(16);
+    }
+
+    .accordion__arrow {
+      height: 11px;
+      margin-left: 10px;
+      margin-top: 5px;
+      width: 19px;
+    }
+
+    p {
+      color: color(secondary);
+      margin: 0;
+    }
+
+  }
+
+  &:hover {
+    text-decoration: none;
+
+    h3, h4 {
+      text-decoration: none;
+    }
+
+  }
+
+}//staff-card
+
+.staff-card .staff-card--accordion.accordion {
+  margin: 0;
+  max-width: 100%;
+}
+
+//Maker
+.list-maker-category-cards {
+  display: flex;
+  flex-direction: row;
+}
+
+.maker-card {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+
+  a {
+    color: color(dark-grey);
+
+    &:hover {
+      text-decoration: none;
+    }
+
+    img {
+      height: auto;
+      padding: 0;
+    }
+
+    h3 {
+      @extend %card-header;
+      font-size: em(25);
+      margin-top: 15px;
+    }
+
+    p {
+      @extend %text-overflow;
+      margin-top: 0;
+    }
+
+  }
+
+}
+
+// Press Cards
+
+.press-card-row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.press-card {
+  width: rem(300);
+}
+
+.press-card__img-bg {
+  align-items: center;
+  background-color: $white;
+  display: flex;
+  justify-content: center;
+  min-height: rem(75);
+}
+
+.press-card__img { max-height: rem(65); }

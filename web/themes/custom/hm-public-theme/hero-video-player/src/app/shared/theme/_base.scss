@@ -1,0 +1,26 @@
+@import 'functions';
+@import 'variables';
+@import 'helpers';
+
+// bootstrap overrides
+
+.container-fluid {
+    font-size: 1rem;
+    padding-top: em(16);
+    padding-bottom: em(16);
+    max-width: em(1500);
+
+    &:focus {
+        outline: 0;
+    }
+
+    @media screen and (min-width: bp(small)) {
+        padding-top: em(30);
+    }
+
+    @media screen and (min-width: bp(medium)) {
+        padding-left: em(30);
+        padding-right: em(30);
+        padding-bottom: em(30);
+    }
+}

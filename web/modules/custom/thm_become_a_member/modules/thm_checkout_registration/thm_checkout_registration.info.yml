@@ -1,0 +1,8 @@
+name: THM Checkout Registration
+type: module
+description: Custom Commerce Checkout Pane for THM DA registration
+core: 8.x
+package: Custom
+dependencies:
+  - commerce
+  - commerce_checkout

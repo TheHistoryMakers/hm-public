@@ -27,3 +27,18 @@ $('.carousel').carousel({
   interval: 5000,
   pause: "true"
 });
+
+$(window).scroll(function() {
+});
+$('#return-to-top').click(function() {      // When arrow is clicked
+  $('body,html').animate({
+      scrollTop : 0                       // Scroll to top of body
+  }, 500);
+});
+
+const $scrollButton = document.querySelector('.scroll');
+function scrollStep() {
+    // Check if we're at the top already.
+    window.scrollTo(0, 0);
+}
+$scrollButton.addEventListener('click', scrollStep);

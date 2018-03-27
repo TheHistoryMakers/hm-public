@@ -1,0 +1,55 @@
+// Hero Slide
+.hero-slide {
+
+  &--image {
+    background-position: center;
+    background-size: cover;
+    height: em(580);
+  }
+
+}
+
+// Two Column Slide
+.two-column-slide {
+  height: 550px;
+
+  &--image {
+    background-position: center;
+    background-size: cover;
+    height: 550px;
+  }
+
+  &--content {
+    background: $white;
+    color: $black;
+    padding-left: $default-grid-gutter-width;
+    padding-right: 50px;
+    padding-top: em(80);
+
+    h2 {
+      @extend %oswald;
+    }
+
+    p {
+      font-size: em(24);
+      line-height: 120%;
+    }
+
+    a.button.button--primary {
+      max-width: em(150);
+      text-align: center;
+    }
+
+  }
+
+  .carousel__caption {
+    padding-bottom: em(70);
+    padding-top: em(70);
+  }
+
+}
+
+.two-column-slide.row {
+  margin-left: auto;
+  margin-right: auto;
+}

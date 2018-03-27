@@ -1,0 +1,23 @@
+{% set nominations = rows[0]['#rows'] %}
+
+<div class="accordion">
+    <button class="accordion__panel" type="button" data-toggle="collapse" data-target="#nominations" aria-expanded="true" aria-controls="nominations">
+        {{ view.storage.label }}
+        <span class="accordion__arrow">
+            <span class="accordion__arrow-half"></span>
+            <span class="accordion__arrow-half"></span>
+        </span>
+    </button>
+
+    <div class="collapse show accordion__body" id="nominations">
+        <div class="card">
+            <ul class="list-group list-group-flush">
+                {% for nomination in nominations %}
+                    {% set data = nomination['#row']._entity.data %}
+        
+                    <li class="list-group-item">{{ data.first_name_personal }} {{ data.last_name_personal }} </li>    
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

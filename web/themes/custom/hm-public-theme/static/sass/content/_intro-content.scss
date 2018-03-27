@@ -1,0 +1,26 @@
+.intro-content {
+  @extend %max-width;
+  margin-bottom: em(60);
+  margin-top: $default-grid-gutter-width;
+  text-align: center;
+
+  div {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+  }
+
+  h1 {
+    @extend %oswald;
+    font-size: em(38);
+    text-align: center;
+  }
+
+  p {
+    @extend %source-sans;
+    font-size: em(24);
+    line-height: normal;
+    text-align: left;
+  }
+
+}

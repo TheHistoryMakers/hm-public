@@ -1,0 +1,239 @@
+.feature-carousel.carousel.slide {
+  margin-bottom: em(30);
+}
+
+.carousel__links {
+  @extend %oswald;
+  font-size: rem(25);
+  line-height: 1.2;
+  position: absolute;
+  top: em(62, 25);
+  width: em(170, 25);
+  z-index: 100;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+    font-size: rem(16);
+  }
+}
+
+.carousel__links--mobile {
+  display: none;
+
+  @media screen and (max-width: 767px) {
+    display: flex;
+    position: relative;
+    top: 0;
+    width: 100%;
+  }
+}
+
+.carousel__link-wrap {
+  display: flex;
+  transition: background-color .2s ease-in-out;
+
+  &:nth-of-type(1) {
+    background-color: color(secondary);
+  }
+
+  &:nth-of-type(2) {
+    background-color: color(primary);
+  }
+
+  &:nth-of-type(3) {
+    background-color: color(quaternary);
+  }
+
+  &:nth-of-type(1):hover,
+  &:nth-of-type(2):hover,
+  &:nth-of-type(3):hover {
+    background-color: $white;
+  }
+
+  @media screen and (max-width: 767px) {
+    flex: 1;
+  }
+}
+
+.carousel__link {
+  color: $white;
+  display: flex;
+  padding: em(15, 25);
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  @media screen and (max-width: 767px) {
+    flex: 1;
+  }
+}
+
+.carousel__link--bio:hover { color: color(secondary); }
+.carousel__link--member:hover { color: color(primary); }
+.carousel__link--da:hover { color: color(quaternary); }
+
+.carousel__caption {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  left: auto;
+  opacity: 0;
+  padding: em(30) em(60) em(30) em(30);
+  position: absolute;
+  right: 0;
+  text-align: left;
+  top: 0;
+  width: 33.0739299610895%;
+  z-index: 300;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.active+.carousel__caption {
+  opacity: 1;
+}
+
+.carousel__inner-caption {
+  background: color(primary);
+  height: 100%;
+  opacity: 0.85;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 33.0739299610895%;
+  z-index: 100;
+
+  @media screen and (max-width: 767px) {
+    display: none;
+  }
+}
+
+.carousel__quote {
+  font-family: 'Oswald', sans-serif;
+  font-size: rem(37);
+  font-weight: 300;
+  line-height: 127.027027027027027%;
+  quotes: '\201C' '\201D';
+  text-align: left;
+
+  @media screen and (max-width: 767px) {
+    font-size: rem(22);
+  }
+}
+
+.carousel__cite {
+  @extend %source-sans-semi-bold;
+  display: block;
+  margin-top: em(21, 37);
+
+  @media screen and (max-width: 767px) {
+    font-size: rem(12);
+  }
+}
+
+.active .carousel__image {
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-name: ken-burns;
+  animation-timing-function: linear;
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.3);
+  }
+}
+
+.carousel-item {
+  max-height: em(600);
+}
+
+.carousel-item-left .carousel__caption {
+  opacity: 0;
+}
+
+.carousel-caption {
+  background-color: color(primary);
+  //display: none;
+  left: auto;
+  margin: em(30) em(90) em(30) em(30);
+  position: relative;
+  right: auto;
+  text-align: left;
+
+  @media screen and (max-width: 767px) {
+    display: flex;
+    flex-direction: column;
+    font-size: rem(22);
+    padding: em(22, 22) em(30, 22) em(75, 22);
+    text-align: left;
+  }
+
+  .carousel__quote {
+    font-size: em(35);
+  }
+
+  h2 {
+    @extend %oswald;
+    color: $white;
+    line-height: 120%;
+    margin: 15px 0;
+    width: 80%;
+  }
+
+  p {
+    font-size: em(24);
+    line-height: 120%;
+  }
+
+}
+
+.active .carousel__caption {
+  opacity: 1;
+  transition: opacity .25s ease-in-out;
+}
+
+.carousel-indicators {
+  left: auto;
+  z-index: 500;
+
+  @media screen and (max-width: 767px) {
+    bottom: em(50);
+    left: 0;
+    margin: 0 auto;
+    right: 0;
+  }
+}
+
+.carousel-indicators li {
+  background-color: color(dark-grey);
+  border-radius: 50%;
+  height: em(10);
+  margin-right: em(10);
+  width: em(10);
+}
+
+// Custom
+.feature-carousel-indicators.carousel-indicators {
+  bottom: em(30);
+
+  a {
+    background-color: color(carousel-pgr-alt);
+    border-radius: 100%;
+    height: em(8);
+    margin-right: em(10);
+    width: em(8);
+  }
+
+  a.active {
+    background-color: $white;
+  }
+
+}

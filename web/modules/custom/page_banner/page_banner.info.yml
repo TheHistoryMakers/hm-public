@@ -1,0 +1,5 @@
+name: Page Banner
+type: module
+description: Display custom Page Banner with page titles and feature/sponsor content when applicable.
+package: Custom
+core: 8.x

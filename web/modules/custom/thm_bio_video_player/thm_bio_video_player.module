@@ -1,0 +1,25 @@
+<?php
+// Code for Angular Module
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
+use Drupal\file\Entity\File;
+
+function thm_bio_video_player_theme($existing, $type, $theme, $path){
+    return [
+        'bio-video' => [
+            'variables' => [
+                'video' => null
+            ],
+            'template' => 'block--bundle--bio-video-player'
+        ]
+    ];
+}
+
+function thm_bio_video_player_get_current_node() {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof NodeInterface) {
+      return $node;
+    } else {
+      return false;
+    }
+  }

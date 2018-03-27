@@ -1,0 +1,7 @@
+thm_become_a_member.goto:
+  path: '/become-a-member'
+  defaults:
+    _title: 'Become A Member'
+    _controller: '\Drupal\thm_become_a_member\Controller\THMBecomeAMemberController::content'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,20 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Snapshot Block.
+ *
+ * Available variables using Paragraphs:
+ * -  {{ content.field_snapshot_block }}
+ *
+ */
+#}
+
+<div class="snapshot-section">
+  <div class="snapshot-section--block">
+    <h2 class="snapshot-section--header">{{ content.field_snapshot_section_header }}</h3>
+    <div class="snapshot-section--content">{{ content.field_snapshot_section_intro }}</div>
+    <div class="snapshot-blocks {{ content.field_snapshot_block_alignment|field_value }}">
+      {{ content.field_snapshot_section_block }}
+    </div>
+  </div>
+</div>

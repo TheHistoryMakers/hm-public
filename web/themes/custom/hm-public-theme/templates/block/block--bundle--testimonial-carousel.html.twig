@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Testimonial Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  {{ content.field_testimonial }}
+ *
+ */
+#}
+
+<div class="testimonial-carousel carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <h2>Testimonials</h2>
+    {{ content.field_testimonial }}
+    {% if content.field_testimonial|length > 17 %}
+      <div class="centered-carousel-indicators carousel-indicators" role="menu">
+        {% for list in content.field_testimonial['#items'] %}
+          {% set item_classes = [start_index == loop.index0 ? 'active'] %}
+          <a {{ item.attributes.addClass(item_classes) }} data-target="{{ target }}" data-slide-to="{{ loop.index0 }}" href=".testimonial-carousel"></a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+$(document).ready(function () {
+  $('.testimonial-carousel').find('.field-item').addClass('carousel-item');
+  $('.testimonial-carousel').find('.field-item').first().addClass('active');
+});
+</script>

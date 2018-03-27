@@ -1,0 +1,26 @@
+{#
+/**
+ * @file
+ * Theme override for Page Banner module.
+ *
+ * Available variables:
+ * -  background_color
+ * -  highlight_section_name
+ * -  highlight_section_image
+ * -  feature_occupation
+ *
+ */
+#}
+
+{# {{ drupal_dump(banner_data) }} #}
+
+<div style="background-image: url('{{ banner_data.background_image }}'); background-color: {{ banner_data.background_color }}; background-size: cover;">
+  <div class="page-banner row col-lg-12">
+    <h2 class="col-sm-9">{{ drupal_title() }}</h2>
+    <div class="page-banner--highlight col-sm-3" style="background-image: url('{{ banner_data.highlight_section_image }}');" alt="{{ banner_data.highlight_section_name }}">
+      <p>{{ banner_data.highlight_section }}</p>
+      <div class="page-banner--highlight-name">{{ banner_data.highlight_section_name }}</div>
+      <div class="page-banner--feature-occupation">{{ banner_data.feature_occupation }}</div>
+    </div>  
+  </div>
+</div>
