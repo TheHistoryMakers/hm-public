@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Theme override for custom Quote Block.
+ *
+ * Available variables using Paragraphs:
+ * -  field_quote_block_content
+ * -  field_quote_block_byline
+ * -  field_quote_block_credits
+ *
+ */
+#}
+
+<div class="quote-block">
+  <div class="quote-block--content">
+    <q>{{ content.field_quote_block_content|field_value }}</q>
+    <div class="quote-block--credits">
+      <cite>{{ content.field_quote_block_byline|field_value }}</cite>
+      <p>{{ content.field_quote_block_credits|field_value }}</p>
+    </div>  
+  </div>
+</div>

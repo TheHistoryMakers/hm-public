@@ -35,6 +35,42 @@
     width: 100%;
   }
 
+  .info__favorites {
+    position: absolute;
+    right: 0;
+    top: 0;
+
+    a {
+      display: none;
+      height: em(50);
+      // opacity: 0;
+      width: 100%;
+    }
+
+    a[href*="flag"] {
+      background: url('../images/add-favorite.svg') center center no-repeat;
+      color: transparent;
+      display: inline-block;
+      height: em(32);
+      margin-top: em(16);
+    }
+
+    a[href*="unflag"] {
+      background: url('../images/remove-favorite.svg') center center no-repeat;
+      color: transparent;
+      display: inline-block;
+      height: em(32);
+      margin-top: em(16);
+      width: em(104);
+    }
+  }
+
+  .info__favorites-icon {
+    position: absolute;
+    right: em(32);
+    top: em(15);
+  }
+
   .discover__heading {
     @extend %oswald;
     background-color: color(quaternary);
@@ -49,11 +85,17 @@
   .bio-card {
     display: flex;
     margin-bottom: em(15);
+    overflow: hidden;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 
   .bio-card__img {
     height: 100%;
     max-width: 120px;
+    transform: scale(1.1);
     width: 50%;
   }
 
@@ -61,6 +103,7 @@
     background-color: $white;
     flex: 2;
     padding: em(12);
+    z-index: 2;
   }
 
   .bio-card__name {
@@ -88,4 +131,35 @@
     max-width: 100%;
   }
 
+  .share {
+    left: em(10);
+    position: fixed;
+    top: 55%; // we may eventually want to use js to calculate this relative to the parent container
+  }
+
+  .share__icon {
+    height: auto;
+    width: em(36);
+  }
+
+  .archive {
+    margin: em(36) 0;
+  }
+
+  .back-button {
+    @extend %source-sans-semi-bold;
+
+    align-items: center;
+    background-color: transparent;
+    color: color(secondary);
+    display: inline-flex;
+    font-size: rem(18);
+    justify-content: space-between;
+    margin-bottom: em(60, 18);
+    width: em(130, 18);
+  }
+
+  .sponsor__img { max-width: 100%; }
 }
+
+.accordion__panel { margin-bottom: 1rem; }

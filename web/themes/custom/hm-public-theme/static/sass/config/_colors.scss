@@ -3,6 +3,7 @@ $white: #FFFFFF;
 $black: #000000;
 $page-background-color: $white;
 $page-font-color: #3B3B3B;
+$red: #ff0000;
 
 // CUSTOM VARIABLES
 $chathamsblue: #154273;
@@ -25,7 +26,11 @@ $colors: (
   quaternary: #2e2d6f,
   light-grey: #f0f0f0,
   medium-grey: #cccccc,
-  dark-grey: #232323
+  dark-grey: #232323,
+  disabled-text: #999,
+  carousel-bg-alt: #dedede,
+  carousel-pgr-alt: #36182d,
+  quaternary-overlay: rgba(46, 45, 111, .5),
 );
 
 // normal, hover, visited

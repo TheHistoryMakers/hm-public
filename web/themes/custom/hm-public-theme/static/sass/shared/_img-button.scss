@@ -1,0 +1,14 @@
+.img-button__img-container { position: relative; }
+
+.img-button__overlay-text {
+  @extend %oswald;
+
+  bottom: 50%;
+  color: $white;
+  font-size: rem(40);
+  line-height: 1.2;
+  position: absolute;
+  right: 50%;
+  text-align: center;
+  transform: translate(50%, 50%);
+}

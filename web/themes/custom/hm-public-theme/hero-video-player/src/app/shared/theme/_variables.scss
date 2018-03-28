@@ -1,0 +1,123 @@
+// maps
+
+$breakpoints: (
+  small: 544px,
+  medium: 768px,
+  large: 1200px
+);
+
+$colors: (
+  primary: #2E2B71,
+  secondary: #941A1D,
+  tertiary: #f0511f,
+  light-grey: #f0f0f0,
+  grey: #cccccc,
+  dark-grey: #232323
+);
+
+// font placeholders
+
+%source-sans {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+%source-sans-semi-bold {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 600;
+}
+
+%source-sans-semi-bold-italic {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: italic;
+  font-weight: 600;
+}
+
+%source-sans-bold {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-weight: 700;
+}
+
+%source-sans-bold-italic {
+  font-family: 'Source Sans Pro', sans-serif;
+  font-style: italic;
+  font-weight: 700;
+}
+
+%oswald {
+  font-family: 'Oswald', sans-serif;
+  font-weight: 500;
+}
+
+//Header Placeholders
+
+%header-1 {
+    @extend %oswald;
+    color: #1E1810;
+    font-size: 1.85714rem;
+    line-height: 1.22222em;
+    margin: 0 0 2.23077em;
+    text-transform: uppercase;
+}
+
+.header-1 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: 1.85714rem;
+    line-height: 1.22222em;
+    margin: 0 0 2.23077em;
+    text-transform: uppercase;
+}
+
+%header-2 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: 1.57143em;
+    line-height: 26px;
+    margin: 0 0 0.71429em;
+    padding: 0;
+}
+
+.header-2 {
+  @extend %oswald;
+  color: color(dark-grey);
+  font-size: 1.57143em;
+  line-height: 26px;
+  margin: 0 0 0.71429em;
+  padding: 0;
+}
+
+%header-3 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: em(22);
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 1.11111em;
+    padding-top: 0;
+}
+
+.header-3 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: em(22);
+    margin-bottom: 0;
+    margin-top: 0;
+    padding-bottom: 1.11111em;
+    padding-top: 0;
+}
+
+%header-4 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: em(22);
+    margin: 0 0 0.3em;
+    padding: 0;
+}
+
+.header-4 {
+    @extend %oswald;
+    color: color(dark-grey);
+    font-size: em(22);
+    margin: 0 0 0.3em;
+    padding: 0;
+}

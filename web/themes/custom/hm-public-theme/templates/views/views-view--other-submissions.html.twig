@@ -1,0 +1,25 @@
+{% set submissions = rows[0]['#rows'] %}
+
+<div class="accordion">
+    <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#submissions" aria-expanded="false" aria-controls="submissions">
+        {{ view.storage.label }}
+        <span class="accordion__arrow">
+            <span class="accordion__arrow-half"></span>
+            <span class="accordion__arrow-half"></span>
+        </span>
+    </button>
+
+    <div class="collapse accordion__body" id="submissions">
+        <!-- <div class="card">
+            <ul class="list-group list-group-flush">
+
+                {% for submission in submissions %}
+                    
+                    {% set data = submission['#row']._entity.data %}
+        
+                    <li class="list-group-item">{{ data.first_name_personal }} {{ data.last_name_personal }} </li>    
+                {% endfor %}
+            </ul>
+        </div> -->
+    </div>
+</div>

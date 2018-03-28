@@ -1,0 +1,21 @@
+{#
+#  The following values are available:
+#  - title
+#  - url
+#  - first_name
+#  - last_name
+#  - bio_image
+#  - maker_type (list)
+#  - occupations (list)
+#}
+{% for record in data %}
+    <div class="bio-card">
+        <img class="bio-card__img" src="{{ record.bio_image }}">
+        <div class="bio-card__info">
+            <span class="bio-card__name">{{ record.title }}</span><br>
+            {% for occupation in record.occupations %}
+                <span class="bio-card__job">{{ occupation }}</span>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}

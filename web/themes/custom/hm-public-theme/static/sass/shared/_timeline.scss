@@ -1,0 +1,48 @@
+.list-timeline-scroller {
+  background-color: color(quaternary);
+
+  .view-content {
+    display: flex;
+    height: 400px;
+    overflow-x: scroll;
+    width: 100vw;
+  }
+
+  .views-row {
+    flex: 1 0 70%;
+    margin: em(30) em(50);
+    overflow: hidden;
+  }
+
+}
+
+.timeline-scroller {
+  display: flex;
+  flex-direction: row;
+  padding-right: em(30);
+
+  &--image {
+    flex: 1 0 100%;
+    height: auto;
+    margin-right: em(30);
+    max-width: 200px;
+    overflow: hidden;
+    transform: scale(1.1);
+  }
+
+  &--content {
+    @extend %source-sans;
+    color: $white;
+    flex: 1;
+    line-height: normal;
+  }
+
+  h4 {
+    @extend %oswald;
+  }
+
+  &--intro {
+    line-height: normal;
+  }
+
+}

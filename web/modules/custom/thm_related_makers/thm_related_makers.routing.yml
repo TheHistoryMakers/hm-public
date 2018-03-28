@@ -1,0 +1,7 @@
+thm_related_makers.content:
+  path: '/related-to/{nid}'
+  defaults:
+    _controller: '\Drupal\thm_related_makers\Controller\RMController::content'
+    _title_callback: '\Drupal\thm_related_makers\Controller\RMController::setTitle'
+  requirements:
+    _permission: 'access content'

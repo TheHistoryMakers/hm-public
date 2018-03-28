@@ -1,3 +1,205 @@
 nav ul {
   @include inline-list;
 }
+
+//Pager
+.pager {
+
+  .pager__item {
+    @extend %source-sans-semi-bold;
+    font-size: em(18);
+  }
+
+  .pager__item > a {
+    margin-right: em(20);
+  }
+
+  .pager__item.is-active > a {
+    background: color(secondary);
+    color: $white;
+    margin-right: em(10);
+    padding: em(10) em(15);
+  }
+
+}
+
+li.pager__item.pager__item--last,
+li.pager__item.pager__item--first,
+li.pager__item.pager__item--ellipsis {
+  display: none;
+}
+
+//Dropdown Navigation
+#hm-public-theme-main-menu .menu-item:hover .menu {
+  display: inline-block;
+}
+
+.menu-item.menu-item--expanded.menu-item--active-trail a {
+  border-bottom: em(8) solid color(tertiary);
+  transition: border-bottom .2s ease-in-out;
+
+  @media screen and (max-width: 767px) {
+    border-bottom: 0;
+  }
+
+}
+
+.menu-item.menu-item--expanded.menu-item--active-trail {
+
+  .menu .menu-item a,
+  .menu .menu-item.menu-item--active-trail a {
+    border-bottom: 0;
+  }
+
+}
+
+#hm-public-theme-main-menu .menu .menu {
+  background: $white;
+  display: none;
+  margin-top: 0.5em;
+  position: absolute;
+  width: 200px;
+  z-index: 10;
+
+  .menu-item {
+    @extend %source-sans;
+    border-bottom: 0;
+    display: block;
+    font-size: 90%;
+    line-height: 120%;
+    padding: 10px 15px;
+    text-transform: none;
+
+    &:hover {
+      background-color: $black;
+      color: $white;
+      cursor: pointer;
+      transition: .2s ease-in-out;
+    }
+
+    &:hover a {
+      color: $white;
+    }
+
+  }
+
+  .menu-item.menu-item--active-trail {
+    background-color: $black;
+    color: $white;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+
+    a {
+      color: $white;
+    }
+
+  }
+
+  .menu-item a {
+    color: color(secondary);
+
+    &:hover {
+      border-bottom: 0;
+      color: $white;
+    }
+
+  }
+
+  .menu-item a.is-active {
+    border-bottom: 0;
+    color: $white;
+  }
+
+}
+
+//MegaMenu
+.simple-mega-menu-type-education-megamenu .name {
+  display: none;
+}
+
+//Hides required child nav item to show the megamenu
+#hm-public-theme-main-menu .menu-item--expanded:hover .mega-menu-wrapper + ul.menu {
+  display: none;
+}
+
+.menu--simple-mega-menu > .menu-item--expanded > .mega-menu-wrapper {
+  left: inherit;
+  padding: 0;
+  width: 40%;
+  z-index: 2000;
+}
+
+.menu--simple-mega-menu > .menu-item--expanded > .mega-menu-wrapper .mega-menu-background {
+  width: auto;
+}
+
+.simple-mega-menu {
+  display: flex;
+}
+
+.menu--simple-mega-menu > .menu-item--expanded > .mega-menu-wrapper .mega-menu-item {
+  flex: 1 0 100%;
+  padding-bottom: em(15);
+}
+
+.field-megamenu-left-column {
+  border-right: 1px solid color(medium-grey);
+}
+
+.field-megamenu-left-column,
+.field-megamenu-right-column {
+  @extend %source-sans;
+  flex: 1;
+  flex-basis: 50%;
+}
+
+.field-megamenu-left-header,
+.field-megamenu-right-header {
+  color: color(disabled-text);
+  letter-spacing: normal;
+  padding: em(8) em(15);
+  text-transform: uppercase;
+}
+
+#hm-public-theme-main-menu .field-megamenu-left-link,
+#hm-public-theme-main-menu .field-megamenu-right-link {
+
+  .field-item {
+    padding: em(5) em(15);
+    text-transform: none;
+
+    &:hover {
+      background-color: $black;
+      cursor: pointer;
+      transition: .2s ease-in-out;
+    }
+
+    &:hover a {
+      color: $white;
+    }
+
+    a {
+      border-bottom: 0;
+      color: color(secondary);
+    }
+
+    a:hover {
+      border-bottom: 0;
+      color: $white;
+      transition: .2s ease-in-out;
+    }
+
+  }
+
+  .field-item.menu-item--active-trail {
+    background-color: $black;
+    cursor: pointer;
+    transition: .2s ease-in-out;
+
+    a {
+      color: $white;
+    }
+
+  }
+
+}

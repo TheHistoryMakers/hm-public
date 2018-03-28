@@ -1,0 +1,65 @@
+.page-banner {
+  display: flex;
+  height: em(276);
+  margin: 0 auto;
+  max-width: $max-width;
+  padding: 0;
+  width: 100%;
+
+  h2 {
+    @extend %oswald-light;
+    align-self: flex-end;
+    color: $white;
+    font-size: em(52);
+    padding-bottom: 1em;
+    padding-left: $default-grid-gutter-width;
+  }
+
+  .page-banner--highlight {
+    align-items: flex-end;
+    background-position: center;
+    background-size: cover;
+    color: $white;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    padding: em(20) em(30) em(30);
+    width: 500px;
+
+    p {
+      align-self: flex-start;
+      flex: 1 0 100%;
+      margin-top: 0;
+      z-index: 10;
+    }
+
+    .page-banner--highlight-name {
+      @extend %oswald;
+      align-content: flex-end;
+      flex-basis: 100%;
+      font-size: em(22);
+      margin-top: 45%;
+      z-index: 10;
+    }
+
+    .page-banner--feature-occupation {
+      line-height: 100%;
+      padding-top: em(8);
+      z-index: 10;
+    }
+
+    // Applies gradient over image for white text
+    // &:before {
+    //   background-image: linear-gradient(transparent, $black);
+    //   bottom: 0;
+    //   content: '';
+    //   left: 0;
+    //   opacity: .3;
+    //   position: absolute;
+    //   right: 0;
+    //   top: 0;
+    // }
+
+  }
+
+}

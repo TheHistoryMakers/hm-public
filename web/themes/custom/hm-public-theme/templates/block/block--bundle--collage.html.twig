@@ -1,0 +1,26 @@
+{% set collageTotal = content['#block_content'].field_collage_paragraph.value %}
+
+<div class="px-4 my-4">
+    <div class="contextual-region">
+      {{ title_prefix }}
+      {{ title_suffix }}
+
+      <div class="collage">
+      {% for c in collageTotal %}
+        {% set collageItem = content.field_collage_paragraph[loop.index0]['#paragraph'] %}
+          <a href="{{ collageItem.field_collage_img_link.0.url }}">
+            <div class="collage__container">
+                <div class="collage__overlay"></div>
+                <img class="collage__img" src="{{ file_url(collageItem.field_collage_image.entity.uri.value) }}" alt="">
+                <div class="collage__info">
+                  <div class="collage__title">{{ collageItem.field_collage_img_title.value }}</div>
+                  <p>{{ collageItem.field_collage_img_caption.value }}</p>
+                </div>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+
+    </div>
+  </div>
+

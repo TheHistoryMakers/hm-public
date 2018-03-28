@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Theme override for paragraph Feature Event Content.
+ *
+ * Available variables using Paragraphs:
+ * -  field_feature_portrait
+ * -  field_feature_title
+ * -  field_feature_details
+ *
+ */
+#}
+
+{# <ol>
+  <li>Portrait: {{ content.field_feature_portrait|field_value }}</li>
+  <li>Title: {{ content.field_feature_title|field_value }}</li>
+  <li>Details: {{ content.field_feature_details|field_value }}</li>
+</ol> #}
+
+<div class="carousel__inner-caption">
+
+  <div class="carousel-caption">
+    {{ content.field_feature_portrait|field_value }}
+    <h2>{{ content.field_feature_title|field_value }}</h2>
+    {{ content.field_feature_details|field_value }}
+  </div>
+</div>

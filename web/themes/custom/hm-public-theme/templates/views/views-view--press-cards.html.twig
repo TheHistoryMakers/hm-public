@@ -1,0 +1,76 @@
+<div class="contextual-region">
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div class="container-fluid">
+      <p class="w-75 text-md-left" style="margin: 20px auto;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras varius hendrerit pharetra. Vivamus gravida lectus efficitur leo aliquam, sollicitudin condimentum nisi bibendum. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. </pw-75 text-md-left>
+      <div class="row px-4">
+      <div class="column col-sm-3 press-year-navigation my-5 mx-0">{{ drupal_menu('press-year-navigation') }}</div>
+
+      {% if rows[0]['#rows'] != null %}
+
+        {% set selectedWorkGrouped = rows[0]['#rows']|batch(3) %}
+        <div class="press-card-row col-sm-9 section-wrapper my-5">
+          {% for group in selectedWorkGrouped %}
+            {% for entry in group %}
+              <div class="press-card m-3">
+                <div class="press-card__img-bg">
+                  <div><img class="press-card__img" src="{{ file_url( entry['#row']._entity.field_press_image.entity.uri.value ) }}" alt=""></div>
+                </div>
+                {{ entry['#row']._entity.title.value }}
+
+                <dl>
+                  {% if entry['#row']._entity.field_publisher.value %}
+                    <dt>Publication: </dt>
+                    <dd> {{ entry['#row']._entity.field_publisher.value }}<dd>
+                  {% endif %}
+
+                  {% if entry['#row']._entity.field_press_date.value %}
+                    <dt>Date: </dt>
+                    <dd> {{ entry['#row']._entity.field_press_date.value | date("l, F d, Y") }}<dd>
+                  {% endif %}
+
+                  {% if entry['#row']._entity.field_collection.value %}
+                    <dt>Collection: </dt>
+                    <dd> {{ entry['#row']._entity.field_collection.value }}<dd>
+                  {% endif %}
+
+                  {% if entry['#row']._entity.field_press_category.value %}
+                    <dt>Category: </dt>
+                    <dd> {{ entry['#row']._entity.field_press_category.value }}<dd>
+                  {% endif %}
+
+                  {% if entry['#row']._entity.field_press_program.value %}
+                    <dt>Program: </dt>
+                    <dd> {{ entry['#row']._entity.field_press_program.value }}<dd>
+                  {% endif %}
+
+                </dl>
+                {% if entry['#row']._entity.field_pdf_upload.value %}
+                  {{ entry['#row']._entity.field_pdf_upload['#list'][0].values }}
+                  <a href="{{ file_url( entry['#row']._entity.field_pdf_upload.entity.uri.value ) }}">{{ entry['#row']._entity.field_pdf_upload.value }}</a>
+                {% endif %}
+
+
+                {% if entry['#row']._entity.field_wav_upload.value %}
+                  {{ entry['#row']._entity.field_wav_upload['#list'][0].values }}
+                  <a href="{{ file_url( entry['#row']._entity.field_wav_upload.entity.uri.value ) }}">{{ entry['#row']._entity.field_wav_upload.value }}</a>
+                {% endif %}
+
+              </div>
+            {% endfor %}
+          {% endfor %}
+        </div>
+
+      {% else %}
+
+        <div class="press-card-row col-sm-9 section-wrapper my-5">
+          There are no press releases for this year.
+        </div>
+
+      {% endif %}
+
+    </div>
+  </div>
+  {# {{ _context.rows }} #}
+</div>

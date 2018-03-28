@@ -1,0 +1,21 @@
+<style>
+  /* Allows the content section background 
+  to go full width */
+  .content-wrapper {max-width: 100%;}
+</style>
+
+{% if page.banner %}
+  <div class="banner">
+    {{ page.banner }}
+  </div>
+{% endif %}
+{% if content.banner %}
+  <div class="banner">
+    {{ content.banner }}
+  </div>
+{% endif %}
+
+<div class="wrapper layout--1-1col">
+  {{ page.content }}
+  {{ content.content }}
+</div>

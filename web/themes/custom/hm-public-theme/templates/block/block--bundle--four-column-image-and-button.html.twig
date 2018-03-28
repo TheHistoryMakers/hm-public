@@ -1,0 +1,19 @@
+{% set cardTotal = content['#block_content'].field_four_column_image_button.value %}
+
+<div class="container my-4 px-0">
+  <div class="contextual-region row">
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    {% for card in cardTotal %}
+      <div class="col-sm-3">
+        <div class="img-button__img-container">
+          <img class="w-100 my-2" src="{{ file_url(content.field_four_column_image_button[loop.index0]['#paragraph'].field_image.entity.uri.value ) }}" alt="">
+          <div class="img-button__overlay-text w-75">{{ content.field_four_column_image_button[loop.index0]['#paragraph'].field_image_overlay_text.value }}</div>
+        </div>
+        <a class="button button--primary w-100 text-center py-3" href="">{{ content.field_four_column_image_button[loop.index0]['#paragraph'].field_button_text.value }}</a>
+      </div>
+    {% endfor %}
+
+  </div>
+</div>

@@ -1,0 +1,42 @@
+.how-it-works {
+  margin-bottom: em(60);
+  margin-top: em(15);
+
+  .two-column-snapshot {
+    margin-bottom: em(15);
+    margin-top: em(15);
+    width: 100%;
+  }
+
+  .two-column-snapshot--image {
+    display: flex;
+    justify-content: flex-start;
+    margin-right: em(15);
+    max-width: em(180);
+    padding: 0;
+  }
+
+  img {
+    height: 100%;
+    width: 100%;
+  }
+
+  p {
+    margin-bottom: 0;
+  }
+
+  ul {
+    margin-left: em(20);
+  }
+
+  li {
+    list-style-type: disc;
+  }
+
+  .snapshot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+}

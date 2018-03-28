@@ -1,0 +1,16 @@
+<?php
+// Code for Angular Module
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\node\NodeInterface;
+use Drupal\file\Entity\File;
+
+function thm_hero_video_player_theme($existing, $type, $theme, $path){
+    return [
+        'angular' => [
+            'variables' => [
+                'video' => null
+            ],
+            'template' => 'block--bundle--hero-video-player'
+        ]
+    ];
+}

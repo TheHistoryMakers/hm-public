@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Contains thm_digitalmaker_flow.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function thm_digitalmaker_flow_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the thm_digitalmaker_flow module.
+    case 'help.page.thm_digitalmaker_flow':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom Drupal Commerce 2.x Checkout flow') . '</p>';
+      return $output;
+
+    default:
+  }
+}

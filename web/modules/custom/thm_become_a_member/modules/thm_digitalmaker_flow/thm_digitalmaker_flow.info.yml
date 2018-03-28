@@ -1,0 +1,5 @@
+name: THM DigitalMaker Checkout Flow
+type: module
+description: Custom Drupal Commerce 2.x Checkout flow
+core: 8.x
+package: Custom

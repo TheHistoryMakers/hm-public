@@ -28,3 +28,42 @@
   list-style-type: none;
   padding: 0;
 }
+
+%sr-only {
+  border: 0;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
+%max-width {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: $max-width;
+}
+
+%card-header {
+  @extend %oswald;
+  color: color(secondary);
+  font-size: em(20);
+}
+
+%text-overflow {
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  display: -webkit-box;
+  line-height: 120%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+%h2 {
+  @extend %oswald;
+  font-size: em(40);
+  margin-bottom: 0;
+}

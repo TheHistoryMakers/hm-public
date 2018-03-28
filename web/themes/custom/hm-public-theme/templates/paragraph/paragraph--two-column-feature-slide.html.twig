@@ -1,0 +1,21 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Two Columns Feature Slide.
+ *
+ * Available variables using Paragraphs:
+ * -  field_feature_image
+ * -  field_feature_carousel_content
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image: {{ content.field_feature_image|field_value }}</li>
+  <li>Content: {{ content.field_feature_carousel_content|field_value }}</li>
+</ol> #}
+
+<div class="feature-carousel-slide">
+  <img class="carousel__image d-block w-100" src="{{ content.field_feature_image|field_value }}" alt="{{ content.field_feature_image|field_raw('alt') }}">
+  {{ content.field_feature_carousel_content|field_value }}
+</div>

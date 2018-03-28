@@ -1,0 +1,209 @@
+<?php
+
+/**
+ * @file
+ * Contains thm_basicmaker_flow.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Entity\Entity\EntityFormDisplay;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\webform\Utility\WebformFormHelper;
+use Drupal\webform\WebformSubmissionForm;
+use Drupal\user\UserInterface;
+use Drupal\Core\Url;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+
+/**
+ * Implements hook_help().
+ */
+function thm_basicmaker_flow_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the thm_basicmaker_flow module.
+    case 'help.page.thm_basicmaker_flow':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Helper logic for the THM BasicMaker Flow Webform') . '</p>';
+      return $output;
+
+    default:
+      break;
+  }
+  return false;
+}
+
+/**
+ *
+ * Creates an in-memory user account.
+ * @param array $data
+ *
+ * @return bool|\Drupal\Core\Entity\EntityInterface
+ */
+function thm_basicmaker_flow_create_user($data = []) {
+  $entityTypeMgr = \Drupal::entityTypeManager();
+  $logger        = \Drupal::logger('thm_basicmaker_flow');
+
+  try {
+    /** @var UserInterface $account */
+    $account = $entityTypeMgr->getStorage('user')->create($data);
+    return $account;
+  } catch (InvalidPluginDefinitionException $exc) {
+    $msg = 'An error occurred in the formation of this page.  Please contact ' .
+      'your administrator';
+    drupal_set_message($msg, 'error');
+    $logger->error($exc->getMessage());
+  }
+  return false;
+}
+
+function get_webform_id() {
+  return 'webform_submission_basicmaker_membership_flow_add_form';
+}
+
+function this_is_the_right_page($elements, $pageName) {
+  return $elements[$pageName]['#type'] === 'container';
+}
+
+function get_value($item) {
+  return $item[0]['value'];
+}
+
+function populateTempUserObject($formValues) {
+  $userData = [];
+
+  foreach ($formValues as $fieldName => $formValue) {
+    if (substr($fieldName, 0, 6) === 'field_') {
+      $userData[$fieldName] = @$formValue[0]['value'];
+    }
+  }
+  return $userData;
+}
+
+function create_user($session, $accountData) {
+  $profileData  = $session->get('profile');
+
+  /** @var \Drupal\user\UserInterface $account */
+  $account = thm_basicmaker_flow_create_user([
+    'mail' => $accountData['mail'],
+    'name' => $accountData['name'],
+    'pass' => $accountData['password'],
+    'status' => TRUE
+  ]);
+
+  foreach ($profileData as $fieldName => $fieldValue) {
+    $account->set($fieldName, $fieldValue);
+  }
+
+  $account->save();
+  user_login_finalize($account);
+  _user_mail_notify('register_no_approval_required', $account);
+  drupal_set_message('An account has been created for ' . $account->getDisplayName());
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function thm_basicmaker_flow_form_alter(&$form, FormStateInterface $formState, $formId) {
+  $targetForm = get_webform_id();
+  $session    = \Drupal::request()->getSession();
+
+  if ($formId === $targetForm) {
+    // if user is already logged in, redirect them to their account page
+    if (\Drupal::currentUser()->isAuthenticated()) {
+      $res = new RedirectResponse(Url::fromUserInput('/user')->toString());
+      return $res->send();
+    }
+
+    $els = &WebformFormHelper::flattenElements($form['elements']);
+
+    if (this_is_the_right_page($els, 'tell_us_about_you')) {
+
+      $anonUser = thm_basicmaker_flow_create_user();
+
+      if (!$anonUser) return false;
+
+      $userForm = EntityFormDisplay::collectRenderDisplay(
+        $anonUser, 'default');
+      $form['account_form'] = $userForm->buildForm($anonUser,$form, $formState);
+
+    } else if (this_is_the_right_page($els, 'membership_account_setup')) {
+
+      $values    = $formState->getValue($form['#parents']);
+      $userData  = populateTempUserObject($values);
+      $session->set('profile', $userData);
+
+    } else if (this_is_the_right_page($els, 'user_profile')) {
+
+      $accountData = $formState->getValue($form['#parents']);
+      create_user($session, $accountData);
+    }
+  }
+}
+
+function thm_basicmaker_flow_form_submit(array &$form, FormStateInterface $formState) {
+  $values           = $formState->getValue($form['#parents']);
+  $userSurveyValues = [];
+
+  $userSurveyValues['in_draft'] = $values['in_draft'];
+
+  $tmp = array_filter($values, function($key) {
+    $exclude = ['mail', 'name', 'password', 'in_draft'];
+    return !in_array($key, $exclude);
+  }, ARRAY_FILTER_USE_KEY);
+
+  $userSurveyValues['data']       = $tmp;
+  $userSurveyValues['webform_id'] = 'user_profile';
+
+  WebformSubmissionForm::submitValues($userSurveyValues);
+}
+
+function validate(&$element, FormStateInterface $formState, &$context) {
+  $webformKey = $element['#webform_key'];
+  $value      = $formState->getValue($webformKey);
+  $formValues = $formState->getValues();
+
+  if ($value === '' || is_array($value)) return;
+
+  /** @var \Drupal\user\UserInterface $account */
+  $account = thm_basicmaker_flow_create_user([
+    'mail' => $formValues['mail'],
+    'name' => $formValues['name'],
+    'pass' => $formValues['password']
+  ]);
+
+  $violations = $account->validate();
+
+  foreach ($violations->getByFields([$webformKey]) as $violation) {
+    $formState->setError($element, $violation->getMessage());
+  }
+
+  unset($account);
+}
+
+/**
+ * Implements hook_webform_element_alter().
+ *
+ * @param array $element
+ * @param FormStateInterface $form_state
+ * @param array $context
+ *
+ */
+function thm_basicmaker_flow_webform_element_alter(array &$element, FormStateInterface $form_state, array $context) {
+  if ($element['#webform_id'] === 'basicmaker_membership_flow--mail' ||
+      $element['#webform_id'] === 'basicmaker_membership_flow--name') {
+    $element['#element_validate'][] = 'validate';
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function thm_basicmaker_flow_theme() {
+  return [
+    'thm_basicmaker_flow' => [
+      'render element' => 'children',
+    ],
+  ];
+}

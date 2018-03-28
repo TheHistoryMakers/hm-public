@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Theme override for Snapshot Block element.
+ *
+ */
+#}
+
+{% for item in content.field_snapshot_file_download|field_value %}
+  <li class="snapshot--download">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 44.44 57.3"><title>Download</title><g id="30c2dd7b-ede7-496f-b8b5-2670f62da8bd" data-name="Layer 2"><g id="2956cd67-78d7-4503-bd40-df077cc04845" data-name="Layer 1"><path d="M18.59,3.63v32L6.19,23.71a3.74,3.74,0,0,0-5.13,0,3.41,3.41,0,0,0,0,4.94l18.6,17.9a3.7,3.7,0,0,0,5.12,0l18.6-17.9a3.41,3.41,0,0,0,0-4.94,3.72,3.72,0,0,0-5.12,0L25.85,35.66v-32a3.63,3.63,0,0,0-7.26,0Z" style="fill:#999"/><path d="M40.81,50H3.63a3.63,3.63,0,0,0,0,7.26H40.81a3.63,3.63,0,0,0,0-7.26Z" style="fill:#999"/></g></g></svg>
+    {{ item }}   
+    </a>
+  </li>
+{% endfor %}

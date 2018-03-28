@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Theme override for Accordion custom blocks.
+ *
+ * Available Fields
+ * -  field_accordion_content
+ * -  field_accordion_title
+ *
+ */
+#}
+
+{# {{ drupal_dump(_context.elements) }} #}
+{# {{ drupal_dump(_context.elements['#derivative_plugin_id']) }} #}
+
+<div class="contextual-region">
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div class="accordion-block accordion">
+    <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#{{  _context.elements['#derivative_plugin_id']}}" aria-expanded="false" aria-controls="{{  _context.elements['#derivative_plugin_id']}}">
+      {{ content.field_accordion_title|field_value }}
+      <span class="accordion__arrow">
+        <span class="accordion__arrow-half"></span>
+        <span class="accordion__arrow-half"></span>
+      </span>
+    </button>
+
+    <div class="collapse accordion__body" id="{{  _context.elements['#derivative_plugin_id']}}">
+      <div>
+        {{ content.field_accordion_content|field_value }}
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -1,7 +1,9 @@
 .footer {
   align-items: center;
+  background-color: $white;
   display: flex;
   flex-direction: column;
+  margin-top: em(60);
   padding: em(35) 0 em(85);
   width: 100%;
 }

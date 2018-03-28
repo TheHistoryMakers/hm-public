@@ -1,0 +1,31 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Two Column Quote Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  field_two_col_testimonial_align
+ * -  field_two_col_testimonial_button
+ * -  field_two_col_testimonial_byline
+ * -  field_two_col_testimonial_credit 
+ * -  field_two_col_testimonial_image 
+ * -  field_two_col_testimonial_quote   
+ *
+ */
+#}
+
+<div class="row two-column-quote two-column-testimonial {{ content.field_two_col_testimonial_align|field_value }}">
+  <div class="col-sm-5 two-column-quote--image">
+    <img src="{{ file_url(content.field_two_col_testimonial_image|field_target_entity.uri.value) }}" alt="{{ content.field_two_col_testimonial_image|field_raw('alt') }}" />
+  </div>
+  <div class="col-sm-7 two-column-quote--content">
+    <q>{{ content.field_two_col_testimonial_quote|field_value }}</q>
+    <p class="two-column-testimonial--byline">{{ content.field_two_col_testimonial_byline|field_value }}</p>
+    <p class="two-column-testimonial--credit">{{ content.field_two_col_testimonial_credit|field_value }}</p>
+    {% if content.field_two_col_testimonial_button|field_value is not empty %}
+      <a href="{{ content.field_two_col_testimonial_button|field_raw('uri') }}" class="button button--primary">
+        {{ content.field_two_col_testimonial_button|field_raw('title') }}
+      </a>
+    {% endif %} 
+  </div>
+</div>

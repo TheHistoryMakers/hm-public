@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * Theme override for Snapshot Block element.
+ *
+ */
+#}
+
+{# URL:  {{ content.field_snapshot_button|field_raw('uri') }}
+Title:  {{ content.field_snapshot_button|field_raw('title') }} #}
+
+<a href="{{ content.field_snapshot_button|field_raw('uri') }}" class="button button--primary">
+  {{ content.field_snapshot_button|field_raw('title') }}
+</a>

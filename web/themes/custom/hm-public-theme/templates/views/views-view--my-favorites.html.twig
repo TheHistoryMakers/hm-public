@@ -1,0 +1,40 @@
+<h2 class="view-block__title">{{view.storage.label}}</h2>
+{% if rows[0]['#rows'] %}
+    {% set selectedWorkGrouped = rows[0]['#rows']|batch(3) %}
+
+        {% for group in selectedWorkGrouped %}
+            <div class="row">
+
+                {% for entry in group %}
+
+                    <div class="col-md-4 favorite">
+
+                        <div class="favorite__flag">
+                            {{ entry['#view'].query.displayHandler.handlers.field.link_flag.original_value }}
+                        </div>
+                        <div class="favorite__card">
+                            <a class="favorite__link-wrapper" href="{{ path('entity.node.canonical', {'node': entry['#row']._entity.nid.value}) }}">
+                                <div class="bio-card">
+                                    <div class="favorite__overlay"></div>
+                                    <img class="bio-card__img" src="{{ file_url( entry['#row']._entity.field_bio_image.entity.uri.value ) }}">
+                                    <div class="bio-card__info">
+                                        <span class="bio-card__name">{{ entry['#row']._entity.title.value }}</span><br>
+                                        {% for category in entry['#row']._entity.field_maker_category %}
+                                            <span class="bio-card__job">{{ entry['#row']._entity.field_maker_category.entity.label }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        {% endfor %}
+
+    {{ pager }}
+
+    {% else %}
+
+    You have no favorites
+{% endif %}

@@ -1,0 +1,22 @@
+<?php
+/**
+ * @file
+ * Contains page_banner.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\search_api\Entity\Index;
+use Drupal\node\NodeInterface;
+use Drupal\file\Entity\File;
+use Drupal\taxonomy\Entity\Term;
+
+function page_banner_theme($existing, $type, $theme, $path){
+  return [
+    'page_banner' => [
+      'variables' => [
+        'banner_data' => null 
+      ]
+    ]
+  ];
+
+} //The End

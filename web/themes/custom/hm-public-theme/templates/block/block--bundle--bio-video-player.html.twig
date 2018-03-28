@@ -1,0 +1,8 @@
+<app-root source="{{ video.field_web_clip1.value }}"
+        source2="{{ video.field_web_clip2.value }}"
+        title="{{ video.field_datitle[0].value | replace({'\\': ''}) }}"
+        title2="{{ video.field_datitle[1].value | replace({'\\': ''}) }}"
+        timingPairs=" {{ video.field_timing_pairs.value | json_encode() }} "
+        transcriptText="{{ video.field_transcript.value | striptags }}">Loading...</app-root>
+
+{{ attach_library('hm_public_theme/bio-video-player') }}

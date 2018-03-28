@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for People view and custom blocks.
+ *
+ * Content Type created using Paragraphs
+ * -  Paragraph Label: People
+ * -  Paragraph Field: field_accordion_people
+ *
+ * Available Fields
+ * -  field_bio
+ * -  field_location
+ * -  field_name
+ * -  field_picture
+ * -  field_position_s
+ *
+ */
+#}
+
+{# {{ drupal_dump(_context|keys) }}  #}
+{# {{ drupal_dump(_context.view.display.display.display_title) }} #}
+{# display_title #}
+
+<div class="people-block accordion">
+    <button class="accordion__panel" type="button" data-toggle="collapse" data-target="#{{ view.element['#name']}}{{ view.element['#display_id'] }}" aria-expanded="true" aria-controls="{{ view.element['#name']}}{{ view.element['#display_id'] }}">
+          {{ _context.view.display.display.display_title }}
+        <span class="accordion__arrow">
+            <span class="accordion__arrow-half"></span>
+            <span class="accordion__arrow-half"></span>
+        </span>
+    </button>
+
+    <div class="collapse show accordion__body" id="{{ view.element['#name']}}{{ view.element['#display_id'] }}">
+        <div class="row col-sm">
+          {{ _context.rows }}
+        </div>
+    </div>
+</div>

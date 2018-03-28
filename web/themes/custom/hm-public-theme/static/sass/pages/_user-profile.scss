@@ -1,0 +1,97 @@
+.user-info__img {
+  width: 100%;
+}
+
+.user-info__member-status {
+  @extend %oswald;
+  background-color: color(quaternary);
+  color: $white;
+  font-size: rem(25);
+  letter-spacing: 1.25px;
+  margin-bottom: em(15, 25);
+  padding: em(16, 25);
+}
+
+.column.sidebar.first {
+  padding-right: 30px;
+}
+
+.details {
+  .accordion {
+    margin-bottom: 10px;
+  }
+}
+
+.favorite {
+  position: relative;
+
+  &:hover .favorite__overlay {
+    cursor: pointer;
+    opacity: .5;
+  }
+
+  &:hover .bio-card__name,
+  &:hover .bio-card__job {
+    color: $white;
+    text-decoration: none;
+    transition: color .2s ease-in-out;
+  }
+
+  .bio-card__info { transition: background-color .2s ease-in-out; }
+
+  &:hover .bio-card__info {
+    background-color: color(quaternary);
+  }
+
+  .bio-card { position: relative; }
+
+  a[href*='flag'] {
+    background: url('../images/add-favorite.svg') center center no-repeat;
+    color: transparent;
+    display: inline-block;
+    height: em(32);
+    margin-top: em(16);
+  }
+
+  a[href*='unflag'] {
+    background: url('../images/remove-favorite.svg') center center no-repeat;
+    color: transparent;
+    display: inline-block;
+    height: em(32);
+    margin-top: em(16);
+    width: em(60);
+  }
+}
+
+.favorite__link-wrapper:hover { text-decoration: none; }
+
+.favorite__overlay {
+  background-color: color(quaternary);
+  height: 100%;
+  max-width: 120px;
+  opacity: 0;
+  position: absolute;
+  transition: opacity .2s ease-in-out, background-color .2s ease-in-out;
+  width: 100%;
+  z-index: 1000;
+}
+
+.favorite__flag {
+  position: absolute;
+  right: 15px;
+  top: 0;
+  z-index: 1500;
+}
+
+#views-block-user-information-block-1,
+#views-block-my-favorites-block-1 {
+  margin-top: $default-grid-gutter-width;
+}
+
+#views-block-user-information-block-1 {
+
+  .accordion__panel {
+    margin-bottom: 0;
+  }
+
+}

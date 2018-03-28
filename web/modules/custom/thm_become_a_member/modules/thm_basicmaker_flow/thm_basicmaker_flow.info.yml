@@ -1,0 +1,7 @@
+name: THM BasicMaker Flow
+type: module
+description: Helper logic for the THM BasicMaker Flow Webform
+core: 8.x
+package: Custom
+dependencies:
+  - webform

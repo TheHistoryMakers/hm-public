@@ -1,0 +1,46 @@
+// Helper classes
+// --------------------------------------------------
+// Classes to use for small, common tasks. If used in conjunction
+// with other styles, please create a class and extend the placeholder.
+
+.bold,
+%bold { font-weight: 700; }
+
+.italic,
+%italic { font-style: italic; }
+
+%list-without-styles,
+.list-without-styles {
+  list-style-type: none;
+  padding: 0;
+}
+
+%mobile-only,
+.mobile-only {
+  @media screen and (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+%tablet-and-above,
+.tablet-and-above {
+  @media screen and (max-width: bp(small)) {
+    display: none !important;
+  }
+}
+
+%desktop-only,
+.desktop-only {
+  @media screen and (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+%limited-text {
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+    display: -webkit-box;
+    line-height: 1.1em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

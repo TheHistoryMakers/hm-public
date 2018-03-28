@@ -1,0 +1,176 @@
+// Single snapshot container
+.snapshot-blocks {
+  @extend %max-width;
+  margin-bottom: em(60);
+
+  .field-items {
+    display: flex;
+    justify-content: center;
+  }
+
+  .field-item {
+    flex: 0 1 25%;
+    margin: 0 15px;
+  }
+
+}
+
+.snapshot {
+
+  &--image {
+    background-position: center;
+    background-size: cover;
+    height: 200px;
+    margin-bottom: em(15);
+    width: 100%;
+  }
+
+  h3 {
+    @extend %oswald;
+    color: color(quaternary);
+  }
+
+  h4 {
+    @extend %source-sans-semi-bold;
+    font-size: em(18);
+  }
+
+  .button {
+    text-align: center;
+    width: 50%;
+  }
+
+  .snapshot--download svg {
+    height: em(15);
+  }
+
+  .snapshot--link svg {
+    width: em(12);
+  }
+
+}
+
+// Two column snapshot container
+.two-column-snapshot {
+  @extend %max-width;
+  margin-bottom: 3.75em;
+  margin-top: em(60);
+  width: 70%;
+
+  &--image img {
+    float: right;
+    margin-right: em(10);
+    max-width: em(267);
+  }
+
+}
+
+//Past Winners Block
+.past-winner-block {
+  margin: 0 auto;
+  max-width: 70%;
+
+  h3.left-block-title {
+    @extend %oswald;
+    color: color(quaternary);
+    padding: em(30) 0 em(15);
+  }
+
+  .field-item {
+    flex: 1;
+  }
+
+  .field-item:first-child {
+    margin-left: 0;
+  }
+
+  .field-item:last-child {
+    margin-right: 0;
+  }
+
+}
+
+.field-past-winners-block .snapshot {
+  display: flex;
+  flex-direction: column;
+
+  .snapshot--image {
+    order: 1;
+  }
+
+  h4 {
+    order: 2;
+  }
+
+  h3 {
+    order: 3;
+  }
+
+  p {
+    margin: em(2) 0 0;
+    order: 4;
+  }
+
+}
+
+//Snapshot Section
+.snapshot-section {
+  background-color: color(carousel-bg-alt);
+  padding: em(40) 0;
+
+  &--header {
+    @extend %oswald;
+    margin-bottom: em(5);
+    text-align: center;
+  }
+
+  &--block {
+    @extend %max-width;
+    width: 70%;
+
+    .field-item {
+      display: flex;
+      flex: 1;
+    }
+
+    .field-item:first-child {
+      margin-left: 0;
+    }
+
+    .field-item:last-child {
+      margin-right: 0;
+    }
+
+    .snapshot {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: space-evenly;
+    }
+
+    h3 {
+      margin-bottom: em(5);
+      margin-top: em(10);
+    }
+
+    p {
+      margin: 0;
+    }
+
+    a.button {
+      margin-top: em(15);
+      width: 100%;
+    }
+
+  }//Close --block
+
+  &--content {
+    margin-bottom: em(10);
+  }
+
+}
+
+//Added field to control snapshot section alignment
+.snapshot-blocks.align-snapshots--center .snapshot {
+  text-align: center;
+}

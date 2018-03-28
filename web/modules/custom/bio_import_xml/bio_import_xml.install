@@ -1,0 +1,47 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: t2
+ * Date: 9/28/17
+ * Time: 2:46 PM
+ */
+
+function bio_import_xml_schema() {
+    $fields = array();
+    $tableName = 'migrate_thm_storage';
+
+    $fields['u_hm_id'] = [
+        'type' => 'serial',
+        'not null' => TRUE,
+        'unsigned' => TRUE,
+        'description' => 'HM ID',
+    ];
+
+    $fieldNames = 'HM_ID, nid, Accession, BirthCity, BirthState, BirthCountry, DateBirth, 
+    Dates_of_Sessions, DateDeath, MaritalStatus, Gender, Favorite_Color, Favorite_Food, 
+    Favorite_Quote, Favorite_Season, Favorite_VacationSpot, PreferredName, NameFirst, 
+    NameMiddle, NameLast, BiographyLong, DescriptionShort, Category, Location_Flash_File, 
+    Location_Flash_Title, Employment_for, Occupation, OccupationCategories, Organizations, 
+    Sponsor, Schools_for, BiographyLongWords, ImageBio, ImageArchive01, ImageArchive02, 
+    BiographyLongPath, SpeakersBureauYesNo, SpeakersBureauPreferredAudience, 
+    SpeakersBureauHonorarium, SpeakersBureauAvailability, SpeakersBureauNotes, RegionCity, 
+    RegionState, TimeStampModificationAny, SponsorLogo, SponsorURL, InterviewPDF1, 
+    InterviewPDF2, LinkToTHMDA, LinkToSMDA, DAStoryList, DASession, DACaption, DAStory, 
+    DATape, DATitle, DAUrl, DATimingPair, new, timestamp';
+
+    $fieldNamesAsArray = explode(', ', $fieldNames);
+
+    foreach ($fieldNamesAsArray as $field) {
+        $fields[trim(strtolower($field))] = [
+            'type' => 'text',
+            'not null' => FALSE,
+        ];
+    }
+
+    $schema[$tableName] = [
+        'fields' => $fields,
+        'primary key' => [ 'u_hm_id' ],
+    ];
+
+    return $schema;
+}

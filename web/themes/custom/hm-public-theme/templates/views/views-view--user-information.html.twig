@@ -1,0 +1,55 @@
+{% set userInfo = rows[0]['#view'].result[0]._entity.fields %}
+{% set isPaidMember = false %}
+<img class="user-info__img" src="{{ file_url( userInfo.user_picture.entity.uri.value ) }}">
+
+{% for role in userInfo.roles %}
+    {% if role.value.target_id == 'thm_paid_member' %}
+      {% set isPaidMember = true %}
+    {% endif %}
+{% endfor %}
+
+{% if isPaidMember == true %}
+  <div class="user-info__member-status">DigitalMaker</div>
+{% else %}
+  <div class="user-info__member-status">BasicMaker</div>
+{% endif %}
+
+<div class="accordion">
+    <button class="accordion__panel" type="button" data-toggle="collapse" data-target="#userDetails" aria-expanded="true" aria-controls="userDetails">
+        Profile Information
+        <span class="accordion__arrow">
+            <span class="accordion__arrow-half"></span>
+            <span class="accordion__arrow-half"></span>
+        </span>
+    </button>
+
+    <div class="collapse show accordion__body" id="userDetails">
+        <div class="card">
+            <div class="card-body">
+                <dl>
+                    <dt>Username:</dt>
+                    <dd>{{ userInfo.name.value}} </dd>
+
+                    <dt>Email:</dt>
+                    <dd>{{ userInfo.mail.value }}</dd>
+
+                    {% if userInfo.field_work_phone.value %}
+                        <dt>Work phone:</dt>
+                        <dd>{{ userInfo.field_work_phone.value }}</dd>
+                    {% endif %}
+
+                    {% if userInfo.field_home_phone.value %}
+                        <dt>Home phone:</dt>
+                        <dd>{{ userInfo.field_home_phone.value }}</dd>
+                    {% endif %}
+
+                    {% if userInfo.field_cell_phone.value %}
+                        <dt>Cell phone:</dt>
+                        <dd>{{ userInfo.field_cell_phone.value }}</dd>
+                    {% endif %}
+                </dl>
+                <a class="button button--primary" href="/user/{{userInfo.uid.value}}/edit" data-drupal-link-system-path="user/1/edit">Update</a>
+            </div>
+        </div>
+    </div>
+</div>

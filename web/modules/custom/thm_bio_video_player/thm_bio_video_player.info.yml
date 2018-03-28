@@ -1,0 +1,7 @@
+name: THM Bio Video Player
+description: A block for rendering select biography stories
+core: 8.x
+package: Custom
+type: module
+dependencies:
+  - block

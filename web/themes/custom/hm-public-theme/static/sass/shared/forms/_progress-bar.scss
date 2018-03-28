@@ -1,0 +1,78 @@
+.webform-progress-tracker {
+
+  .progress-step::after {
+    display: none;
+  }
+
+  .progress-step {
+    align-items: center;
+    background-color: color(medium-grey);
+    color: color(disabled-text);
+    display: flex;
+    font-weight: 400;
+    justify-content: center;
+    margin-right: em(15);
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+
+    // active styles override
+    // specificity required for override
+    &.is-active {
+      background-color: color(dark-grey);
+
+      .progress-text {
+        color: $white;
+        font-weight: 400;
+        padding: em(16) 0;
+      }
+      .progress-title { font-weight: 400; }
+    }
+
+    .progress-text { @extend %oswald; }
+    .progress-title { @extend %oswald; font-weight: 400; }
+  }
+
+  .progress-marker {
+    display: none;
+  }
+}
+
+.checkout-progress {
+  display: flex;
+}
+
+.checkout-progress--step {
+  @extend %oswald;
+
+  align-items: center;
+  background-color: color(medium-grey);
+  color: color(disabled-text);
+  display: flex;
+  flex: 1;
+  font-size: em(22);
+  font-weight: 400;
+  justify-content: center;
+  margin-right: em(15);
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+
+}
+
+.checkout-progress--step__current {
+  background-color: color(dark-grey);
+  color: $white;
+  font-weight: 400;
+  padding: em(16) 0;
+}
+
+.checkout-progress--step:before { display: none; }
+
+.checkout-pane-thmda-membership-opts {
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: em(300);
+}

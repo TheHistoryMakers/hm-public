@@ -1,0 +1,32 @@
+.list-people {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: em(60);
+  padding: 0 15px;
+
+  //List
+  .view-content {
+    display: flex;
+    flex: 1;
+    flex-flow: row wrap;
+    order: 4;
+  }
+
+}
+
+.people-block.accordion {
+  @extend %max-width;
+
+  .row {
+    margin: 0;
+  }
+
+}
+
+.people-block.accordion .accordion__body .staff-card--accordion .accordion__body {
+  margin-left: 0;
+  margin-right: 0;
+  max-width: 100%;
+}

@@ -1,3 +1,7 @@
+// We need to be able to extend a class in this unique case
+// because we do not have control over the markup.
+// sass-lint:disable placeholder-in-extend
+
 .header {
   background-color: color(light-grey);
   color: color(dark-grey);
@@ -7,22 +11,45 @@
 .header__top-row {
   align-items: center;
   display: flex;
+  margin: 0 auto;
+  max-width: $max-width;
 
   @media screen and (max-width: 767px) {
     display: none;
   }
 }
 
-.header__da-link {
-  @extend %source-sans-semi-bold;
+.header__da-links {
   background-color: $white;
+  cursor: pointer;
+  padding: em(16, 15) em(20, 15);
+  position: relative;
+}
+
+.header__da-links-title {
+  @extend %source-sans-semi-bold;
   color: color(secondary);
   font-size: rem(15);
-  padding: em(16, 15) em(20, 15);
+}
 
-  &:hover {
-    color: color(secondary);
+.header__da-link-container {
+  background-color: $white;
+  left: 0;
+  opacity: 0;
+  padding: em(16, 15) em(20, 15);
+  position: absolute;
+  width: 100%;
+
+  .header__da-links:hover & {
+    opacity: 1;
   }
+}
+
+.header__da-link {
+  @extend %source-sans;
+  display: block;
+  font-size: rem(14);
+  margin-top: em(10, 14);
 }
 
 .header__donate-link {
@@ -56,8 +83,8 @@
 
 #hm-public-theme-main-menu {
   margin: 0 auto;
-  max-width: em(1240);
-  padding: 0 em(55);
+  max-width: $max-width;
+  padding: 0 $default-grid-gutter-width;
 
   @media screen and (max-width: 767px) {
     left: - em(600, 16);
@@ -136,7 +163,13 @@
 
 .profile__option { @extend %list-item-no-styles; }
 
-.profile__link { color: color(dark-grey);}
+.profile__link,
+.profile__link:hover {
+  background-color: transparent;
+  color: color(dark-grey);
+}
+
+.profile__link:hover { text-decoration: underline; }
 
 .social {
   @extend %list-no-styles;
@@ -171,5 +204,58 @@
     position: absolute;
     top: 0;
     z-index: 2000;
+  }
+}
+
+// Sign Up / In Modal
+.modal {
+
+  .description {
+    @extend %sr-only;
+  }
+
+  .button {
+    @extend .button--secondary;
+    min-width: 100px;
+    text-align: center;
+  }
+}
+
+.modal input {
+  margin-bottom: em(8);
+  max-width: 100%;
+}
+
+.modal-header {
+  border-bottom: 0;
+  justify-content: flex-end;
+}
+
+.modal__heading {
+  @extend %oswald;
+
+  font-size: em(28);
+}
+
+.modal-footer { border-top: 0; }
+
+.modal-dialog {
+  @media screen and (min-width: 567px) {
+    max-width: em(700);
+  }
+}
+
+.modal__register {
+  align-items: center;
+  border-right: 1px solid color(medium-grey);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.modal__login {
+  .button {
+    display: block;
+    margin-left: auto;
   }
 }

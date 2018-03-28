@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Two Column Quote Carousel.
+ *
+ * Available variables using Paragraphs:
+ * -  field_quote_image
+ * -  field_quote
+ * -  field_quote_byline
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image:         {{ content.field_quote_image|field_value }}</li>
+  <li>Image URL:     {{ file_url(content.field_quote_image|field_target_entity.uri.value) }}</li>  
+  <li>Alt Tag:       {{ content.field_quote_image|field_raw('alt') }}</li>
+  <li>Quote:         {{ content.field_quote }}</li>
+  <li>Quote Byline:  {{ content.field_quote_byline|field_value }}</li>
+</ol> #}
+
+<div class="row two-column-quote">
+  <div class="col-sm-5 two-column-quote--image">
+    <img src="{{ file_url(content.field_quote_image|field_target_entity.uri.value) }}" alt="{{ content.field_quote_image|field_raw('alt') }}" />
+  </div>
+  <div class="col-sm-7 two-column-quote--content">
+    <h4>{{ content.field_quote|field_value }}</h4>
+    <p>{{ content.field_quote_byline|field_value }}</p>
+  </div>
+</div>

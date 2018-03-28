@@ -1,0 +1,5 @@
+<app-root videoUrl="{{ file_url(content.field_video_upload[0]["#file"].uri.value) }}"
+          title="{{ content.field_title|field_value }}"
+          body="{{ content.field_body|field_value }}"></app-root>
+
+{{ attach_library('hm_public_theme/hero-video-player') }}

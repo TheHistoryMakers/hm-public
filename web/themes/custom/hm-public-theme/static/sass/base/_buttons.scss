@@ -1,20 +1,24 @@
-.button.button {
+.button.button,
+%button {
   @extend %source-sans-semi-bold;
   border-radius: 0;
   font-size: rem(16);
-  padding: em(16) em(14);
+  margin-right: em(15);
+  padding: em(13) em(14) em(16);
 
   @media screen and (max-width: 767px) {
     font-size: rem(11);
   }
 }
 
-.button.button--primary {
+.button.button--primary,
+%button--primary {
   background-color: color(primary);
   border: em(1) solid transparent;
 }
 
-.button.button--secondary {
+.button.button--secondary,
+%button--secondary {
   background-color: color(secondary);
   border: em(1) solid transparent;
 }
@@ -26,14 +30,15 @@
 
 // hover and focus state
 .button.button--primary:hover,
-.button.button--primary:focus {
+.button.button--primary:focus,
+%button--primary-focus {
   background-color: $white;
   border: em(1) solid color(primary);
   color: color(primary);
 }
 
 .button.button--secondary:hover,
-.button.button--secondary:focus {
+.button.button--secondary:focus, {
   background-color: $white;
   border: em(1) solid color(secondary);
   color: color(secondary);
@@ -46,3 +51,12 @@
   color: color(quaternary);
 }
 
+//Membership Button
+.button.button--primary.button--membership {
+  @extend %oswald;
+  font-size: em(30);
+  line-height: 120%;
+  margin: em(10) em(8) em(10) 0;
+  max-width: 6em;
+  padding: .5em 1em .5em .5em;
+}

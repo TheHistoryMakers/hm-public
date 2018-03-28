@@ -1,0 +1,19 @@
+{#
+/**
+ * @file
+ * Theme override for custom block Image Block.
+ *
+ * Available variables using Paragraphs:
+ * -  field_image_block
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image: {{ content.field_image_block|field_value }}</li>
+  <li>Alt: {{ content.field_image_block|field_raw('alt') }}</li>
+</ol> #}
+
+<div class="image-grid--block">
+  <img src={{ file_url(content.field_image_block|field_target_entity.uri.value) }} alt={{ content.field_image_block|field_raw('alt') }} />
+</div>

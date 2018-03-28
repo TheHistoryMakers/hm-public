@@ -1,0 +1,189 @@
+.member {
+
+  &--anchor-buttons {
+    display: flex;
+    justify-content: center;
+    margin-bottom: em(15);
+    margin-top: em(15);
+
+    ul li {
+      display: inline;
+    }
+
+    ul li a {
+      text-align: center;
+      width: em(120);
+    }
+
+  }
+
+  &--content {
+    color: color(quaternary);
+    margin-bottom: em(15);
+    margin-top: em(15);
+    text-align: center;
+
+    h1 {
+      @extend %oswald;
+      font-size: em(40);
+      margin: 0 auto;
+    }
+
+    p {
+      color: $black;
+    }
+
+  }
+
+}//.membership
+
+#becomeamembercontentblock {
+  margin-bottom: $default-grid-gutter-width;
+}
+
+// Pricing Block
+.membership.row {
+  @extend %max-width;
+  display: flex;
+  justify-content: center;
+  margin-bottom: em(60);
+  max-width: 70%;
+  text-align: center;
+  width: 100%;
+
+  .two-column-testimonial--header {
+    margin-bottom: em(15);
+    margin-top: 0;
+  }
+
+  h3 {
+    @extend %oswald;
+    font-size: em(35);
+    margin-bottom: em(15);
+  }
+
+  h4 {
+    @extend %oswald;
+    color: $black;
+    font-size: em(25);
+    margin-bottom: em(15);
+    margin-top: em(15);
+  }
+
+  .membership--individual svg,
+  .membership--institutional svg {
+    margin-bottom: em(15);
+    max-width: 70%;
+  }
+
+  .membership--individual {
+    border-right: 1px solid color(medium-grey);
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    h3 {
+      color: color(secondary);
+    }
+
+    h4 {
+      margin-bottom: em(5);
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    input#edit-signup-form,
+    input#edit-membership-form {
+      margin-right: 0;
+      width: 80%;
+    }
+
+    .membership--outline-box {
+      border-left: 1px solid color(medium-grey);
+      padding-bottom: em(60);
+    }
+
+  }//.membership--individual
+
+  .membership--institutional {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+
+    h3 {
+      color: color(quaternary);
+    }
+
+    h4 {
+      margin-bottom: em(30);
+    }
+
+    p {
+      margin-top: 0;
+    }
+
+    input#edit-signup-form--2 {
+      margin-right: 0;
+      width: 40%;
+    }
+
+    .membership--outline-box {
+      border-right: 1px solid color(medium-grey);
+      padding-bottom: em(60);
+    }
+
+  }//.membership--institutional
+
+  .membership--pricing-table {
+    @extend %source-sans-semi-bold;
+    border-top: 1px solid color(medium-grey);
+    text-align: left;
+
+    tr:nth-child(odd) {
+      background-color: color(medium-grey);
+      margin: 0;
+
+      td {
+        border-right: 0;
+      }
+
+    }
+
+    tr:nth-child(even) {
+      background-color: $white;
+      margin: 0;
+
+      td {
+        text-align: center;
+      }
+
+    }
+
+    td {
+      border: 1px solid color(medium-grey);
+      border-right: 0;
+      border-top: 0;
+      padding: 1em $default-grid-gutter-width;
+
+      &:last-of-type {
+        border-right: 1px solid color(medium-grey);
+      }
+
+      svg {
+        width: em(40);
+      }
+
+    }
+
+    p {
+      margin: 0;
+      padding: 0;
+    }
+
+  }//.membership--pricing-table
+
+}

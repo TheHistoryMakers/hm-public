@@ -1,0 +1,72 @@
+.view.list-events .view-content {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+  width: 70%;
+
+  .bio-card--list {
+    max-width: 30%;
+  }
+
+  .field-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h3 {
+    color: color(quaternary);
+  }
+
+}
+
+//Everything below the carousel
+.event__content {
+  @extend %max-width;
+  margin-top: $default-grid-gutter-width;
+}
+
+//Left column
+.event__info {
+
+  .event__bio {
+    margin-bottom: $default-grid-gutter-width;
+  }
+
+  .accordion-block.accordion {
+    width: 100%;
+  }
+
+  .accordion__body {
+    padding: em(15);
+  }
+
+}
+
+.event__sponsor {
+
+  img {
+    height: auto;
+    margin-top: $default-grid-gutter-width;
+    max-width: 100%;
+  }
+
+}
+
+//Right column
+.event__date-and-time {
+  margin-bottom: $default-grid-gutter-width;
+
+  h6 {
+    color: $red;
+  }
+
+}
+
+//Misc.
+.event__info h2,
+.event__date-and-time h2,
+.event__location h2 {
+  margin-bottom: em(5);
+}

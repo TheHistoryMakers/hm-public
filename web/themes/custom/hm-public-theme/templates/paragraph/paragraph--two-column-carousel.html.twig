@@ -1,0 +1,36 @@
+{#
+/**
+ * @file
+ * Theme override for custom block 2 Column Slide.
+ *
+ * Available variables using Paragraphs:
+ * -  field_slide_image
+ * -  field_slide_header
+ * -  field_slide_content
+ *
+ */
+#}
+
+{# <ol>
+  <li>Image:         {{ content.field_carousel_image|field_value }}</li>
+  <li>Image URL:     {{ file_url(content.field_carousel_image|field_target_entity.uri.value) }}</li>  
+  <li>Alt Tag:       {{ content.field_carousel_image|field_raw('alt') }}</li>
+  <li>Slide Header:  {{ content.field_carousel_header }}</li>
+  <li>Slide Content: {{ content.field_carousel_content }}</li>
+  <li>Slide Link URL:  {{ content.field_carousel_link|field_raw('uri') }}</li>
+  <li>Slide Link Title:  {{ content.field_carousel_link|field_raw('title') }}</li>
+</ol> #}
+
+<div class="row two-column-slide">
+  <div class="col-sm-8 two-column-slide--image" style="background-image: url('{{ file_url(content.field_carousel_image|field_target_entity.uri.value) }}');" alt="{{ content.field_carousel_image|field_raw('alt') }}">
+  </div>
+  <div class="col-sm-4 two-column-slide--content carousel__caption">
+    <h2 style="color: {{ content.field_carousel_header_color|field_value }};">{{ content.field_carousel_header|field_value }}</h2>
+    <p>{{ content.field_carousel_content|field_value }}</p>
+    {% if content.field_carousel_link|field_value is not empty %}
+      <a href="{{ content.field_carousel_link|field_raw('uri') }}" class="button button--primary">
+        {{ content.field_carousel_link|field_raw('title') }}
+      </a>
+    {% endif %} 
+  </div>
+</div>
