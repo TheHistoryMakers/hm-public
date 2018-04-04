@@ -1,0 +1,11 @@
+diff --git a/modules/payment/src/PluginForm/PaymentMethodAddForm.php b/modules/payment/src/PluginForm/PaymentMethodAddForm.php
+--- a/modules/payment/src/PluginForm/PaymentMethodAddForm.php
++++ b/modules/payment/src/PluginForm/PaymentMethodAddForm.php
+@@ -117,6 +117,7 @@ class PaymentMethodAddForm extends PaymentGatewayFormBase {
+     $payment_method->setBillingProfile($form['billing_information']['#profile']);
+
+     $values = $form_state->getValue($form['#parents']);
++    if (array_key_exists('payment_details', $values)) $values['payment_details']['customer_email'] = $form_state->getValues()['payment_details']['customer_email'];
+     /** @var \Drupal\commerce_payment\Plugin\Commerce\PaymentGateway\SupportsStoredPaymentMethodsInterface $payment_gateway_plugin */
+     $payment_gateway_plugin = $this->plugin;
+     // The payment method form is customer facing. For security reasons

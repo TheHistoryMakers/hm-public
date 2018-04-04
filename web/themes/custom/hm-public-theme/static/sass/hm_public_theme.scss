@@ -5,6 +5,7 @@
 @import "config/colors";
 @import "config/media-grid";
 @import "config/transitions";
+@import "config/dims";
 
 // Import grid.
 // Removed from import in favor of Bootstrap 4's grid for the moment
@@ -58,6 +59,7 @@
 @import 'content/feature-carousel';
 @import 'content/content';
 @import 'content/how-it-works';
+@import 'content/store';
 
 // Specific page styling
 @import 'pages/home';
@@ -69,3 +71,5 @@
 // Views styling
 @import 'views/biographies';
 @import 'views/people';
+@import 'views/store';
+@import 'views/cart';

@@ -52,13 +52,32 @@
   margin-top: em(10, 14);
 }
 
-.header__donate-link {
+.header__top-row .make-a-donation #edit-donation-form {
   @extend %source-sans-semi-bold;
+  background: transparent;
   color: color(dark-grey);
-  padding: em(16, 15) em(20, 15);
 
   &:hover {
-    color: color(dark-grey);
+    border: 0;
+    color: color(secondary);
+    text-decoration: underline;
+  }
+
+  &:focus {
+    border: 0;
+  }
+}
+
+.header__top-row .upgrade-to-thmda #edit-upgrade-form {
+  @extend %source-sans;
+  background: transparent;
+  color: color(secondary);
+  font-size: rem(15);
+  padding: 0;
+
+  &:hover {
+    border: 0;
+    text-decoration: underline;
   }
 }
 

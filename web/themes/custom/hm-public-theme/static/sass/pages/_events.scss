@@ -40,6 +40,11 @@
 
   .accordion__body {
     padding: em(15);
+
+    img {
+      width: 100%;
+    }
+
   }
 
 }

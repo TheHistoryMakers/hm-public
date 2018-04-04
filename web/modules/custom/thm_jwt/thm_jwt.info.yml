@@ -1,0 +1,9 @@
+name: 'THM JWT Issuer'
+type: module
+description: 'Serves to craft JWTs for authentication and access to remote THM services'
+core: 8.x
+package: 'Custom'
+dependencies:
+  - jwt
+  - jwt_auth_issuer
+  - key

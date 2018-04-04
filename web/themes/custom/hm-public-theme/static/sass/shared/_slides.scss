@@ -9,6 +9,21 @@
 
 }
 
+.hero-slide--date {
+  @extend %oswald;
+  background: $white;
+  color: color(primary);
+  font-size: em(30);
+  line-height: 120%;
+  padding: em(10);
+  position: absolute;
+  right: 0;
+  text-align: center;
+  text-transform: uppercase;
+  top: 0;
+  width: em(45);
+}
+
 // Two Column Slide
 .two-column-slide {
   height: 550px;
@@ -45,6 +60,7 @@
   .carousel__caption {
     padding-bottom: em(70);
     padding-top: em(70);
+    width: 100%;
   }
 
 }
@@ -52,4 +68,52 @@
 .two-column-slide.row {
   margin-left: auto;
   margin-right: auto;
+}
+
+.two-column-slide--event {
+
+  .two-column-slide--image {
+    padding: 0;
+  }
+
+  img {
+    margin: 0;
+    min-width: 100%;
+  }
+
+}
+
+.carousel__caption--event {
+  background-color: color(primary);
+
+  a.button {
+    @extend %oswald;
+    background-color: $white;
+    color: color(quaternary);
+    font-size: em(20);
+    margin-right: 0;
+    text-align: center;
+    width: 100%;
+  }
+
+  a.button:hover {
+    background-color: color(quaternary);
+    color: $white;
+  }
+
+}
+
+.carousel__caption--buttons {
+  bottom: em(60);
+  position: absolute;
+  width: 50%;
+
+  p {
+    color: $white;
+    font-size: em(18);
+    margin-bottom: em(10);
+    margin-top: em(10);
+    text-align: center;
+  }
+
 }

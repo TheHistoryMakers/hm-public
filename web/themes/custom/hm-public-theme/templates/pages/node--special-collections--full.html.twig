@@ -1,0 +1,38 @@
+{% set collection = node %}
+
+<div class="contextual-region">
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  {% if collection.field_spec_collect_video_upload[0].entity.uri.value is not empty %}
+    <div class="container-fluid column">
+      <app-root videoUrl="{{ file_url(collection.field_spec_collect_video_upload[0].entity.uri.value) }}"
+                title="{{ collection.field_spec_collect_video_title.value }}"
+                body="{{ collection.field_spec_collect_video_body.value }}"></app-root>
+    </div>
+  {% endif %}
+
+  {% if collection.body.value is not empty %}
+    <div class="container-fluid">
+      <section>{{ collection.body.value|raw|nl2br}}</section>
+    </div>
+  {% endif %}
+
+  {% if collection.field_event_gallery is not empty %}
+    <div class="container-fluid">
+      <div class="collage">
+      {% for photo in collection.field_event_gallery %}
+        <div class="collage__container">
+          <img class="collage__img" src="{{ file_url(photo.entity.fileuri) }}" alt="">
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+</div>
+
+{% if collection.field_spec_collect_video_upload[0].entity.uri.value is not empty %}
+  {{ attach_library('hm_public_theme/hero-video-player') }}
+{% endif %}
+

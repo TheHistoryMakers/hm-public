@@ -1,0 +1,7 @@
+name: THM Commerce Shipment Weight
+type: module
+description: 'Adds support for Shipment Weight Range in Commerce 2.x'
+package: Custom
+core: 8.x
+dependencies:
+  - commerce_shipping

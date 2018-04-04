@@ -1,0 +1,27 @@
+{#
+/**
+ * @file
+ * Theme override for paragraphs Generic Accordion
+ *
+ * Available variables using Paragraphs:
+ * -  field_generic_accordion_title
+ * -  field_generic_accordion_content
+ *
+ */
+#}
+
+<div class="accordion-block accordion">
+  <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#{{ _context.paragraph.id() }}" aria-expanded="false" aria-controls="{{ _context.paragraph.id() }}">
+    {{ content.field_generic_accordion_title|field_value }}
+    <span class="accordion__arrow">
+      <span class="accordion__arrow-half"></span>
+      <span class="accordion__arrow-half"></span>
+    </span>
+  </button>
+
+  <div class="collapse accordion__body" id="{{ _context.paragraph.id() }}">
+    <div>
+      {{ content.field_generic_accordion_content|field_value }}
+    </div>
+  </div>
+</div>

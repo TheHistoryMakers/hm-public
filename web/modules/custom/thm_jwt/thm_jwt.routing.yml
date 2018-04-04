@@ -1,0 +1,7 @@
+thm_jwt.archive_unauthorized:
+  path: '/archive-unauthorized'
+  defaults:
+    _controller: '\Drupal\thm_jwt\Controller\THMJWTUnauthorized::content'
+    _title: 'Digital Archive Access'
+  requirements:
+    _permission: 'access content'

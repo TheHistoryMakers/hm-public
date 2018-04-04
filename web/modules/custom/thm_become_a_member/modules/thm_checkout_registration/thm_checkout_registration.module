@@ -41,14 +41,18 @@ function thm_checkout_registration_theme($existing, $type, $theme, $path) {
   ];
 }
 
+function isDigitalmakerPaymentForm($form, $formId) {
+  return $formId === 'commerce_checkout_flow_thm_digitalmaker_flow'
+    && $form['#step_id'] === 'payment_method';
+}
+
 /**
  * Implements hook_form_alter().
  *
  * @param $form array
  */
-function thm_checkout_registration_form_alter(&$form) {
-  if (array_key_exists('#step_id', $form) && $form['#step_id'] === 'payment_method') {
-
+function thm_checkout_registration_form_alter(&$form, FormStateInterface $formState, $formId) {
+  if (isDigitalmakerPaymentForm($form, $formId)) {
     $form['match_registration_data'] = [
       '#type' => 'checkbox',
       '#title' => t('Check if billing info matches registration info.'),

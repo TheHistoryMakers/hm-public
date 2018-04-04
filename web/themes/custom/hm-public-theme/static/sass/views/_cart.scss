@@ -1,0 +1,165 @@
+.cart, .cart-empty-page{
+
+  display:flex;
+  width: 100%;
+  margin-bottom: 10px;
+
+  &:last-of-type{
+    margin-bottom: 0px;
+  }
+
+  .views-element-container{
+    width: 100%;
+  }
+
+  p{
+    margin: 0;
+  }
+
+  @media all and (min-width: 1248px){
+    width: 80%;
+    margin-right:auto;
+    margin-left:auto;
+  }
+
+  table.cols-6{
+
+    display:flex;
+    flex-direction: column;
+
+    @media all and (max-width: $screen_sm_max) {
+      flex-direction:column;
+    }
+
+    thead{
+      @media all and (max-width: $screen_sm_max) {
+        display:none;
+      }
+    }
+
+    tbody>tr, thead>tr{
+      @extend .shopping-card;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      &:last-of-type{
+        margin-bottom: 0;
+      }
+
+      &>td,&>th{
+
+        display:flex;
+        flex-direction:column;
+
+        @media all and (max-width: $screen_sm_max) {
+          width: 100%;
+          padding: 0px;
+
+          span{
+            font-weight: bold;
+            margin-right: 8px;
+            display:inline-block;
+          }
+        }
+
+        @media all and ( min-width: $screen_md_min ){
+
+          width: (15%);
+          padding: 0px 8px;
+
+          span{
+            display:none;
+          }
+
+          &:first-of-type{
+            width: (100%-(15*5));
+            padding-left:0px;
+          }
+
+          &:last-of-type{
+            padding-right:0px;
+          }
+
+          input.form-number{
+            width:100%;
+          }
+        }
+      }
+
+      //product cover
+      td:nth-child(2){
+
+        .product-id, .price, .field-format{
+          display: none;
+        }
+
+        @media all and (max-width: $screen_sm_max) {
+          width: 100%;
+          padding: 0px;
+
+          span{
+            font-weight: bold;
+            margin-right: 8px;
+            display:inline-block;
+          }
+        }
+
+        .field-items{
+
+          width: 100%;
+          height: 100%;
+          display: table;
+
+          .field-item{
+
+            text-align: center;
+            vertical-align: middle;
+            display: table-cell;
+
+            img{
+              max-width: 100%;
+              height:auto;
+            }
+          }
+        }
+      }
+
+      @media all and (max-width: $screen_sm_max) {
+        flex-direction:column;
+
+        &>td, &>th{
+          margin-bottom: 7px;
+
+          &:last-of-type{
+            margin-bottom: 0;
+          }
+        }
+
+      }
+    }
+  }
+
+  .form-actions.js-form-wrapper.form-wrapper, .total-price{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+
+    @extend .shopping-card;
+  }
+
+  .total-price{
+
+    @media all and ( min-width: $screen_md_min ){
+      .field-item:last-of-type{
+        margin-right: 2.5em;
+      }
+    }
+  }
+
+
+}
+
+.cart-empty-page{
+  @extend .product-card;
+}

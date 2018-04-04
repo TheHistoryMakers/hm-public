@@ -16,6 +16,8 @@
 </ol> #}
 
 <div class="feature-carousel-slide">
-  <img class="carousel__image d-block w-100" src="{{ content.field_feature_image|field_value }}" alt="{{ content.field_feature_image|field_raw('alt') }}">
+  <div class="feature-carousel__image-container">
+    <img class="carousel__image d-block w-100" src="{{ content.field_feature_image|field_value }}" alt="{{ content.field_feature_image|field_raw('alt') }}">
+  </div>
   {{ content.field_feature_carousel_content|field_value }}
 </div>

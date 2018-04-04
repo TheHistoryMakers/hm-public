@@ -1,0 +1,93 @@
+.item-list.store-products{
+
+  display:flex;
+
+
+  @media all and (min-width: 1248px){
+    width: 70%;
+    margin-right:auto;
+    margin-left:auto;
+  }
+
+  ul{
+
+    li.row{
+
+      @extend .product-card;
+      .price{
+        font-weight:bold;
+        margin-top: em(10)
+      }
+
+      .views-field-variations-1{
+        align-self:flex-start;
+
+        form{
+          display:flex;
+          flex-direction:column;
+
+          .form-item.form-type-select{
+            margin: 0;
+            padding: em(4) 0;
+            width:em(200); //ensure there is no blank space on the right.
+          }
+
+          input{
+            margin: em(10) 0;
+          }
+        }
+      }
+
+
+      @media all and (min-width: $screen_lg_min) {
+
+        flex-direction: row;
+        flex-wrap: nowrap;
+        .views-field-body{
+          width:100%;
+        }
+
+        .views-field-variations-1{
+          align-self:flex-end;
+
+          form{
+            align-items:flex-end;
+
+            input{
+              margin: em(10) 0 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+
+.product-detail{
+  @extend .product-card;
+
+  @media all and (min-width: 1248px){
+    width: 60%;
+    margin-right:auto;
+    margin-left:auto;
+  }
+
+  .price{
+    font-weight:bold;
+    margin-top: em(10)
+  }
+
+
+
+  //we want to have the dropdown below the label which also has an asterisk.
+  div.form-item{
+    display:flex;
+    flex-wrap: wrap;
+    width: 250px;
+  }
+
+  input{
+    margin: em(15) 0 em(10);
+  }
+}

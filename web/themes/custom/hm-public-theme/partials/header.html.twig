@@ -3,16 +3,19 @@
         <div class="header__da-links">
             <div class="header__da-links-title">Explore The HistoryMakers Archives</div>
             <div class="header__da-link-container">
-                <!-- Still need to add role logic to display 'upgrade' link if not a paying member -->
                 {% if logged_in %}
-                    <a class="header__da-link" href="#">The HistoryMakers Digital Archive</a>
-                    <a class="header__da-link" href="#">ScienceMakers Digital Archive</a>
+                    {% if paid_user %}
+                        <a class="header__da-link" href="{{ user_jwt_da }}">The HistoryMakers Digital Archive</a>
+                        <a class="header__da-link" href="{{ user_jwt_smda }}">ScienceMakers Digital Archive</a>
+                    {% else %}
+                        {{ upgrade_form }}
+                    {% endif %}
                 {% else %}
                     <a class="header__da-link" href="/become-a-member">Become a member today!</a>
                 {% endif %}
             </div>
         </div>
-        <a class="header__donate-link" href="#">Donate Now</a>
+        {{ donation_form }}
 
         <ul class="profile">
         {% if logged_in %}

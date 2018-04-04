@@ -75,7 +75,9 @@
   &--image {
     flex: 1 0 100%;
     height: auto;
+    max-height: 199px;
     max-width: 200px;
+    overflow: hidden;
     padding: 0;
     width: 100%;
 
@@ -172,7 +174,6 @@
 }
 
 // Press Cards
-
 .press-card-row {
   display: flex;
   flex-wrap: wrap;
@@ -191,3 +192,21 @@
 }
 
 .press-card__img { max-height: rem(65); }
+
+.product-card{
+  background: $white;
+  border: 1px solid color(medium-grey);
+  display: flex;
+  flex-direction: column;
+  padding: em(30);
+  margin: em(15) em(15) em(15);
+}
+
+.shopping-card{
+  background: $white;
+  border: 1px solid color(medium-grey);
+  display: flex;
+  flex-direction: column;
+  padding: em(15);
+  margin: em(7) em(7);
+}

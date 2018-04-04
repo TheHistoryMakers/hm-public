@@ -1,0 +1,160 @@
+<?php
+
+/**
+ * @file
+ * Contains jwt_url.module.
+ */
+
+use Drupal\Core\Session\AccountInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+
+const JWT_CACHE = 'user_jwt_';
+
+/**
+ * Implements hook_help().
+ *
+ * @param string $route_name Name of route.
+ *
+ * @return string|bool
+ */
+function thm_jwt_help($route_name) {
+  switch ($route_name) {
+    // Main module help for the jwt_url module.
+    case 'help.page.jwt_url':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Appends a JWT to a URL.') . '</p>';
+      return $output;
+
+    default:
+      return false;
+  }
+}
+
+
+/**
+ * Implements hook_user_login().
+ *
+ * @param AccountInterface $account User account.
+ */
+function thm_jwt_user_login(AccountInterface $account) {
+  $request = \Drupal::request();
+  $session = $request->getSession();
+  $query   = $request->getQueryString();
+
+  if ($account->isAuthenticated()) {
+    $token = thm_jwt_fetch_token($session);
+
+    if (_requestHasReturnUrl($query)) {
+      $url = urldecode(explode('=', $query)[1]);
+      _redirectToReturnUrl(thm_jwt_refresh_url($url, $token));
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function thm_jwt_theme() {
+  return [
+    'thm_jwt' => [
+      'variables' => [ 'jwt_url' => null ]
+    ]
+  ];
+}
+
+function thm_jwt_fetch_token(SessionInterface $session) {
+  return _fetchToken($session);
+}
+
+/**
+ * Replaces (invalid) JWT in referral URL. Returns URL with newly issued JWT.
+ *
+ * @param string $url
+ * @param string $token
+ *
+ * @return null|string|string[]
+ */
+function thm_jwt_refresh_url(string $url, string $token) {
+  $rePattern = '/^(?P<scheme>https\:\/\/)(?P<host>[\w\.]+)(?:\?jwt=)(?P<token>[\w\.]+)/i';
+  return preg_replace_callback($rePattern, function($matches) use ($token) {
+    return $matches['scheme'] . $matches['host'] . '?jwt=' . $token;
+  }, $url);
+}
+
+/**
+ * Redirects to URL specified.
+ *
+ * @param string $url
+ *
+ * @return Symfony\Component\HttpFoundation\Response
+ */
+function _redirectToReturnUrl(string $url) {
+  return RedirectResponse::create($url)->send();
+}
+
+/**
+ * Predicate that determines if url's query string has the parameter `return`.
+ * @param $query
+ *
+ * @return bool
+ */
+function _requestHasReturnUrl($query) {
+  return strpos($query, 'return') !== false;
+}
+
+
+/**
+ * Adds a token to the session.
+ *
+ * @param string $token
+ * @param SessionInterface $session
+ */
+function _cacheToken(string $token, SessionInterface $session) {
+  $session->set(JWT_CACHE, $token);
+}
+
+/**
+ * Retrieves JWT via session storage or direct generation.
+ *
+ * @param SessionInterface $session
+ *
+ * @return bool|string
+ */
+function _fetchToken(SessionInterface $session) {
+  $token = $session->get(JWT_CACHE);
+
+  if (isset($token)) {
+      return $token;
+  } else {
+    $newToken = _generateToken();
+    _cacheToken($newToken, $session);
+    return $newToken;
+  }
+}
+
+/**
+ * Generates JWT.
+ *
+ * @return bool|string
+ */
+function _generateToken() {
+  /** @var \Drupal\jwt\Authentication\Provider\JwtAuth $auth */
+  $auth = \Drupal::getContainer()->get('jwt.authentication.jwt');
+  return $auth->generateToken();
+}
+
+/**
+ * Wrapper for successor to `drupal_set_message`.
+ *
+ * @param string $msgText
+ * @param string $level
+ *
+ * @return MessengerInterface
+ */
+function _setMessage(string $msgText = '', string $level = 'status') {
+  $msgr = \Drupal::messenger();
+  return $msgr->addMessage($msgText, $level);
+}

@@ -20,7 +20,7 @@ vg-player {
   display: flex;
   flex: 2;
   margin: 0 auto;
-  max-width: em(500); 
+  max-width: em(500);
 
   //IE
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
@@ -72,8 +72,8 @@ vg-player {
   //Safari
   &:not(:root:root) {
     flex: 0 1 auto;
-    width: auto;    
-  }  
+    width: auto;
+  }
 }
 
 .vg-scrub-bar {
@@ -91,18 +91,18 @@ vg-player {
   width: 11.1111111111111%;
 }
 
-.vg-volume .volumeBackground { 
+.vg-volume .volumeBackground {
   background-color: color(dark-grey);
   height: em(2);
 }
 
-.vg-volume .volumeValue { 
-  background-color: color(primary); 
+.vg-volume .volumeValue {
+  background-color: color(primary);
   height: em(2)
 }
 
-.vg-volume .volumeKnob { 
-  background-color: color(primary); 
+.vg-volume .volumeKnob {
+  background-color: color(primary);
   height: em(12);
   width: em(12);
 }
@@ -168,7 +168,7 @@ vg-player {
     .page-title {
         flex: 2;
     }
-    
+
     .button-bar {
         margin: 0;
     }
@@ -221,7 +221,7 @@ vg-player {
 
 .videoBlock {
     display:block;
-    margin: 0 auto; 
+    margin: 0 auto;
     max-width: 320px; /* TODO: decide if we want greater than 1x display width, or stay at max 1x display width which is 320 pixels */
     min-height: 180px;
     height: auto;
@@ -241,7 +241,7 @@ vg-player {
 }
 
 .about {
-    /* TODO: Later, dress up with gradient backgrounds, e.g., 
+    /* TODO: Later, dress up with gradient backgrounds, e.g.,
     background-color: transparent;
     background-image: linear-gradient(to bottom, rgba(30, 87, 153, 0.2) 0%, rgba(125, 185, 232, 0) 100%);
     background-repeat: repeat;
@@ -271,7 +271,7 @@ vg-player {
     }
 }
 
-.about__section { 
+.about__section {
     border-bottom: 1px solid color(grey);
     margin-bottom: em(10);
     padding-bottom: em(12);
@@ -340,7 +340,7 @@ vg-player {
 }
 
 input {
-    color: #1E1810; 
+    color: #1E1810;
     font-family: 'Roboto', sans-serif;
     font-weight: 300;
     font-size: 1em;
@@ -451,7 +451,7 @@ input {
         cursor: not-allowed;
         opacity: .4;
     }
-    
+
     &--mobile {
         @extend %mobile-only;
 
@@ -598,7 +598,7 @@ input {
 .story-nav__prev-button,
 .story-nav__next-button {
     @extend %source-sans;
-    
+
     align-items: center;
     background-color: transparent;
     color: #fff;
@@ -666,13 +666,13 @@ input {
 
 .tabs__playlist-buttons { margin-left: auto; }
 
-.tabs__playlist-buttons { 
-    align-items: center; 
-    display: flex; 
-    height: em(35); 
+.tabs__playlist-buttons {
+    align-items: center;
+    display: flex;
+    height: em(35);
     justify-content: center;
-    position: relative; 
-    width: em(35); 
+    position: relative;
+    width: em(35);
 }
 
 .tabs__tooltip {
@@ -696,7 +696,7 @@ input {
         position: absolute;
         right: - em(4, 12);
         top: em(13, 12);
-        width: 0; 
+        width: 0;
         white-space: nowrap;
     }
 }
@@ -751,3 +751,5 @@ input {
     text-decoration: none;
   }
 }
+
+

@@ -78,6 +78,10 @@ section.content.column.section-wrapper {
 }
 
 //Custom Layouts
+.layout--1-1col {
+  width: 100%;
+}
+
 .layout--1-2-1col {
   @extend %max-width;
 

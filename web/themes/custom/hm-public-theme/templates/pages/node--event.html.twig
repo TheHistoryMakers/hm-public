@@ -9,14 +9,8 @@
  * -  field_date_and_time_details
  * -  field_address
  * -  field_event_image
- * -  field_hon_guest02 (honarary guest)
+ * -  field_date_image_label
  * -  field_insert_images
- * -  field_hon_bio01
- * -  field_event_chair
- * -  field_hon_chair
- * -  field_benefit_committee
- * -  field_events_sponsors
- * -  field_event_title_sponsor
  *
  */
 #}
@@ -31,15 +25,38 @@
       {# Carousel #}
       <div class="two-column-snapshot-carousel carousel slide" data-ride="carousel">
         <div class="carousel-inner">
-          <div class="hero-slide">
+          <div class="hero-slide carousel-item active">
             <div class="hero-slide--image" style="background-image: url('{{ file_url(content.field_event_image|field_target_entity.uri.value) }}');" alt="{{ content.field_event_image|field_raw('alt') }}">
+              <div class="hero-slide--date">
+                {{ content.field_date_image_label|field_value }}
+              </div>
             </div>
-          </div>
+          </div>{# close hero-slide #}
+          {# Event Image #}
+          {% if content.field_insert_images|field_value is not empty %}
+            {% for item in content.field_insert_images|field_value %}
+            <div class="row two-column-slide two-column-slide--event carousel-item">
+              <div class="col-sm-8 two-column-slide--image">
+                {{ item }}
+              </div>
+              <div class="col-sm-4 two-column-slide--content carousel__caption carousel__caption--event">
+                <div class="hero-slide--date">
+                  {{ content.field_date_image_label|field_value }}
+                </div>
+                <div class="carousel__caption--buttons">
+                  <a href="#" class="button">Buy Tickets</a>
+                  <p>or</p>
+                  <a href="#" class="button">Become a Sponsor</a>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          {% endif %}
         </div>
           {# Pager #}
-          {% if content.field_two_column_snapshot|length > 17 %}
+          {% if content.field_image_slide|length > 17 %}
             <div class="centered-carousel-indicators carousel-indicators" role="menu">
-              {% for list in content.field_two_column_snapshot['#items'] %}
+              {% for list in content.field_image_slide['#items'] %}
                 {% set item_classes = [start_index == loop.index0 ? 'active'] %}
                 <a {{ item.attributes.addClass(item_classes) }} data-target="{{ target }}" data-slide-to="{{ loop.index0 }}" href=".two-column-snapshot-carousel"></a>
               {% endfor %}
@@ -56,106 +73,8 @@
       <div class="event__bio">
         {{ content.field_hon_bio01|field_value }}
       </div>
-
-      {# Honorary Chair #}
-        {% if content.field_hon_cochair|field_value is not empty %}
-        <div class="accordion-block accordion">
-          <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#field_hon_cochair" aria-expanded="false" aria-controls="field_hon_cochair">
-            Honorary Chair
-            <span class="accordion__arrow">
-              <span class="accordion__arrow-half"></span>
-              <span class="accordion__arrow-half"></span>
-            </span>
-          </button>
-
-          <div class="collapse accordion__body" id="field_hon_cochair">
-            <ul>
-              {% for item in content.field_hon_cochair|field_value %}
-                <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      {% endif %}
-
-      {# Chair #}
-      {% if content.field_chair|field_value is not empty %}
-        <div class="accordion-block accordion">
-          <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#field_chair" aria-expanded="false" aria-controls="field_chair">
-            Chair
-            <span class="accordion__arrow">
-              <span class="accordion__arrow-half"></span>
-              <span class="accordion__arrow-half"></span>
-            </span>
-          </button>
-
-          <div class="collapse accordion__body" id="field_chair">
-            <ul>
-              {% for item in content.field_chair|field_value %}
-                <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      {% endif %}
-
-      {# Co-chairs #}
-      {% if content.field_co_chairs|field_value is not empty %}
-        <div class="accordion-block accordion">
-          <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#field_co_chairs" aria-expanded="false" aria-controls="field_co_chairs">
-            Co-chairs
-            <span class="accordion__arrow">
-              <span class="accordion__arrow-half"></span>
-              <span class="accordion__arrow-half"></span>
-            </span>
-          </button>
-
-          <div class="collapse accordion__body" id="field_co_chairs">
-            <ul>
-              {% for item in content.field_co_chairs|field_value %}
-                <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      {% endif %}
-
-      {# Benefit Committee #}
-      {% if content.field_benefit_committee|field_value is not empty %}
-        <div class="accordion-block accordion">
-          <button class="accordion__panel collapsed" type="button" data-toggle="collapse" data-target="#field_benefit_committee" aria-expanded="false" aria-controls="field_benefit_committee">
-            Benefit Committee
-            <span class="accordion__arrow">
-              <span class="accordion__arrow-half"></span>
-              <span class="accordion__arrow-half"></span>
-            </span>
-          </button>
-
-          <div class="collapse accordion__body" id="field_benefit_committee">
-            <ul>
-              {% for item in content.field_benefit_committee|field_value %}
-                <li>{{ item }}</li>
-              {% endfor %}
-            </ul>
-          </div>
-        </div>
-      {% endif %}
-
-      {# Premier Sponsor #}
-      <hr>
-      <section class="event__sponsor">
-      <h2>Premier Sponsor</h2>
-        {{ content.field_events_sponsors|field_value }}
-      </section>
-
-      {# Title Sponsor #}
-      <hr>
-      <section class="event__sponsor">
-      <h2>Title Sponsor</h2>
-        {{ content.field_event_title_sponsor|field_value }}
-      </section>
-
-    </div>{# closed events__info #}
+      {{ content.field_event_accordion|field_value }}
+    </div>
 
     <div class="col-sm-12 col-md-3 column last">
       {{ content.right_3 }}
@@ -167,16 +86,10 @@
       <div class="event__location">
         <h2>Location</h2>
         {{ content.field_address|field_value }}
-        <a href="">View Map</a>
+        {{ content.field_event_address|field_value }}
+        {{ content.field_event_map|field_value }}
       </div>
     </div>
 
   </div>
-</div>{# Closed contextual-region #}
-
-<script>
-$(document).ready(function () {
-  $('.two-column-snapshot-carousel').find('.field-item').addClass('carousel-item');
-  $('.two-column-snapshot-carousel').find('.field-item').first().addClass('active');
-});
-</script>
+</div>

@@ -17,29 +17,22 @@
                           </title>
                           <path d="M5.428 3.872l5.428-3.62V14.73l-5.428-3.62H0V3.872h5.428zm7.275-1.03l1.248-.96c1.34 1.628 2.01 3.498 2.01 5.61 0 2.05-.64 3.877-1.92 5.48l-1.21-.994c1.037-1.327 1.555-2.822 1.555-4.487 0-1.748-.56-3.298-1.682-4.65 0 0 1.12 1.352 0 0zM17.623 15l.11-.145c1.713-2.147 2.57-4.59 2.57-7.328 0-2.774-.87-5.235-2.607-7.382L17.588 0l-1.502 1.158.126.145c1.484 1.82 2.226 3.896 2.226 6.224 0 2.28-.718 4.325-2.153 6.134l-.127.146L17.624 15z" fill="#333" fill-rule="evenodd"/>
                       </svg>
-                      <vg-volume class="vg-volume" (mouseup)="setVolume()"></vg-volume>
-                      <svg container="body" placement="top" class="vg-full-width" (click)="toggleWideView()" width="25" height="15" viewBox="0 0 25 15" xmlns="http://www.w3.org/2000/svg">
-                          <title>
-                              Full screen icon and button
-                          </title>
-                          <path d="M1 1h23v13H1z" stroke="#333" stroke-width="2" fill="none" fill-rule="evenodd" />
-                      </svg>
+                      <vg-volume class="vg-volume"></vg-volume>
                   </div>
               </vg-controls>
               <video aria-label="video" [src]="currentItem.src" [vgMedia]="media" #media class="" preload="auto" playsinline [poster]="currentItem.thumb" (loadeddata)="isLoaded()" (timeupdate)="adjustVideoCurrentTime()" (ended)="nextVideo()"></video>
             </vg-player>
         </section>
-    
+
         <section class="col-sm-4 next-vid">
             <h3>Up Next</h3>
             <div class="row next-vid__preview" (click)="nextVideo()">
                 <div class="col-md-6"><img class="next-vid__thumb" [src]="previousItem.thumb" alt=""></div>
                 <div class="col-md-6 next-vid__title">{{previousItem.title}}</div>
             </div>
-            <a class="next-vid__da-button" href="">Pay Here to Watch the Entire Interview</a>
         </section>
     </div>
-    
+
     <!-- Transcript area -->
     <div class="" *ngIf="timingPairs">
         <div class="">

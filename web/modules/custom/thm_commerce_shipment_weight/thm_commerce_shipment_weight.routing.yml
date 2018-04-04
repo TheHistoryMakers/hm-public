@@ -1,0 +1,7 @@
+thm_commerce_shipment_weight.order_state_changer:
+  path: '/admin/commerce/orders/change-state/{order_id}/{order_state}'
+  defaults:
+    _controller: '\Drupal\thm_commerce_shipment_weight\Controller\OrderStateChangerController::change'
+    _title: 'Order State Changer'
+  requirements:
+    _permission: 'access commerce administration pages'

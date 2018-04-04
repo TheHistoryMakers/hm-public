@@ -1,0 +1,5 @@
+name: 'THM Donation Flow'
+type: module
+description: 'Commerce 2.x checkout wlzard for donations'
+core: 8.x
+package: 'Custom'

@@ -1,0 +1,73 @@
+<?php
+
+/**
+ * @file
+ * Contains thm_donation_flow.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\commerce_cart\CartSession;
+use Drupal\commerce_order\Entity\Order;
+
+/**
+ * Implements hook_help().
+ *
+ * @param string $route_name
+ * @param RouteMatchInterface $route_match
+ *
+ * @return string|Null
+ */
+function thm_donation_flow_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the thm_donation_flow module.
+    case 'help.page.thm_donation_flow':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Commerce 2.x checkout wlzard for donations') . '</p>';
+      return $output;
+
+    default:
+      return null;
+  }
+}
+
+function isPaymentForm(array &$form, string $formId) {
+  return $formId === 'commerce_checkout_flow_thm_donation_checkout_flow'
+    && $form['#step_id'] === 'payment_method';
+}
+
+function getOrderEmail($orderId) {
+  $storage = \Drupal::entityTypeManager()->getStorage('commerce_order');
+  /** @var Order $order */
+  $order   = $storage->load($orderId);
+
+  return $order->getEmail();
+}
+
+function getOrderId() {
+  $currentUrl  = \Drupal::service('path.current')->getPath();
+  $orderId     = explode('/', $currentUrl)[2];
+
+  if (is_numeric($orderId)) return $orderId;
+  else return 0;
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * @param array $form
+ * @param FormStateInterface $form_state
+ * @param string $form_id
+ */
+function thm_donation_flow_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  if (isPaymentForm($form, $form_id)) {
+    // necessary for anonymous (guest) donation payments.
+    $form['payment_details']['customer_email'] = [
+      '#type' => 'hidden',
+      '#value' => getOrderEmail(getOrderId())
+    ];
+  }
+}
+
+

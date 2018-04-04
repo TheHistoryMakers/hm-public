@@ -4,20 +4,29 @@
  * hm_public_theme theme implementation file.
  */
 
+use Drupal\user\Entity\User;
+use Drupal\user\Form\UserLoginForm;
+use Drupal\thm_become_a_member\Form\THMUpgradeAMemberForm;
+use Drupal\thm_donation_flow\Form\THMDonationForm;
+
 function hm_public_theme_preprocess_page(&$variables) {
   // You will most likely want to show and render the form for anonymous users.
   $variables['login_form'] = FALSE;
+
   if (!\Drupal::currentUser()->id()) {
-    $form = Drupal::formBuilder()->getForm(Drupal\user\Form\UserLoginForm::class) ; 
-    $render = Drupal::service('renderer');
-    $variables['login_form'] = $render->renderPlain($form);
- /**
- * Implements hook_theme_suggestions_HOOK_alter() for form templates.
- * @param array $suggestions
- * @param array $variables
- */
+    $variables['login_form'] = render_form(UserLoginForm::class);
   }
+
+  $variables['paid_user']  = current_user_has_role('thm_paid_member');
+
+  if ($variables['paid_user']) {
+    $variables['user_jwt_da']   = assemble_paid_links();
+    $variables['user_jwt_smda'] = assemble_paid_links('smda');
+  }
+
+  /** @var \Drupal\node\NodeInterface $node */
   $node = \Drupal::routeMatch()->getParameter('node');
+
   if ($node instanceof \Drupal\node\NodeInterface) {
     // You can get nid and anything else you need from the node object.
     $variables["nid"] = $node->id();
@@ -26,18 +35,58 @@ function hm_public_theme_preprocess_page(&$variables) {
     if ($node->bundle() === "bio") {
       $variables["field_web_clip1"] = $node->field_web_clip1->value;
     }
+  }
 
-    //following did not work ?!
-    //$vars["field_text"] = $node->get('field_text')->getValue();
-    //$vars["field_text"] = $node->field_text->getValue();
-  }    
+  $variables['upgrade_form']  = render_form(THMUpgradeAMemberForm::class);
+  $variables['donation_form'] = render_form(THMDonationForm::class);
+}
 
+/**
+ * Retrieves JWT.
+ *
+ * @return bool|string
+ */
+function get_user_jwt() {
+  $session = \Drupal::request()->getSession();
+  return thm_jwt_fetch_token($session);
+}
+
+function assemble_paid_links($subDomain = 'da') {
+  $host = 'thehistorymakers';
+  return "https://$subDomain.$host.org/?jwt=" . get_user_jwt();
+}
+
+/**
+ * Determines if current user has a specific role.
+ *
+ * @param string $roleId
+ *
+ * @return bool
+ */
+function current_user_has_role($roleId) {
+  return User::load(\Drupal::currentUser()->id())->hasRole($roleId);
+}
+
+/**
+ * Renders a form.
+ *
+ * @param \Drupal\Core\Form\FormInterface|string $className
+ *   The value must be one of the following:
+ *   - The name of a class that implements \Drupal\Core\Form\FormInterface.
+ *   - An instance of a class that implements \Drupal\Core\Form\FormInterface.
+ *
+ * @return \Drupal\Component\Render\MarkupInterface|mixed
+ */
+function render_form($className){
+  $form     = \Drupal::formBuilder()->getForm($className);
+  /** @var Drupal\Core\Render\Renderer $renderer */
+  $renderer = \Drupal::service('renderer');
+  return $renderer->renderPlain($form);
 }
 
 /**
  * Implements hook_theme_suggestions for both a Custom Block and a View
  */
-
 function hm_public_theme_theme_suggestions_block_alter(array &$suggestions, array $variables) {
   if (isset($variables['elements']['content']['#block_content'])) {
     array_splice($suggestions, 1, 0, 'block__bundle__' . $variables['elements']['content']['#block_content']->bundle());

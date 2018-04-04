@@ -1,0 +1,31 @@
+
+
+<div class="container my-4 px-0">
+  <div class="contextual-region">
+    {{ title_prefix }}
+    {{ title_suffix }}
+
+    {% if rows[0]['#rows'] != null %}
+
+      {% set collections = rows[0]['#rows'] %}
+      <ul class="row">
+
+        {% for collection in collections %}
+
+        <li class="col-sm-6 col-md-4 my-4">
+          <div>
+            <img class="w-100 my-2" src="{{ file_url(collection['#row']._entity.field_event_image.entity.uri.value ) }}" alt="">
+          </div>
+          <h2 class="my-1">{{ collection['#row']._entity.title.value }}</h2>
+          <date>{{ collection['#row']._entity.field_date.value | date("l, F d, Y") }}</date>
+          {% set text = collection['#row']._entity.body.value|render|striptags %}
+          <p>{{ text|length > 200 ? text|slice(0, 200) ~ '...' : text }}</p>
+          <a class="button button--primary w-100 text-center py-3" href="/node/{{ collection['#row'].nid }}">See More</a>
+        </li>
+        {% endfor %}
+      </ul>
+
+    {% endif %}
+
+  </div>
+</div>
